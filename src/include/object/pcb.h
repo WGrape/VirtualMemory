@@ -4,7 +4,7 @@
 
 typedef struct{
 
-	char *map[MEMORY_UNIT_COUNT];
+	Process *p;
 	
 }PCB;
 
