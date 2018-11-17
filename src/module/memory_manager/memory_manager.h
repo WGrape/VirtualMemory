@@ -1,10 +1,9 @@
 #ifndef MODULE_MEMORY_MANAGER_H
 #define MODULE_MEMORY_MANAGER_H
 
-extern int command_login_success(int argc, char **argv);
+extern char* memory_manager_alloc();
 
-extern void command_enter_sql_interactive_env();
+extern void memory_manager_collec(char *p);
 
-extern int command_logout_success();
 
 #endif
