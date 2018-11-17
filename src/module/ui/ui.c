@@ -1,7 +1,12 @@
 #include<stdio.h>
 
+void ui_print_launch(){
+
+	printf("Choose the different types of virtual memory\n1(Page) 2(Segment) 3(SegmentPage) 4(Quit) : ");	
+}
+
 // 打印出欢迎语
-void ui_print_welcome(int vm_type){
+void ui_print_vm_welcome(int vm_type){
 
 	if(vm_type==VM_TYPE_PAGE){
 
@@ -16,8 +21,8 @@ void ui_print_welcome(int vm_type){
 }
 
 // 打印出菜单
-void ui_print_menu(){
+void ui_print_vm_menu(){
 
-	printf("Services for you to choose\n1(Print All Proccesses) 2(New Process) 3(Destroy Process)");
+	printf("Services for you to choose\n1(Print All Proccesses) 2(New Process) 3(Destroy Process) 4(Exit)");
 }
 
