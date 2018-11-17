@@ -1,0 +1,7 @@
+#ifndef INCLUDE_DEFINE_CONSTANT_H
+#define INCLUDE_DEFINE_CONSTANT_H
+
+#define MEMORY_UNIT_COUNT 1000 // 内存单元个数
+
+
+#endif
