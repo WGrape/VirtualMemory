@@ -15,7 +15,18 @@ void page_virtual_memory_init(){
 		scanf("%d",&option);
 		switch(option){
 
-			case 
+			// 打印出所有的 process
+			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
+			break;
+			
+			// 新建 process
+			case VM_MENU_OPTION_NEW_PROCESSES:
+			break;
+
+			// 
+			case VM_MENU_OPTION_HALT_PROCESSES:
+			break;
+
 		}
 	}
 
