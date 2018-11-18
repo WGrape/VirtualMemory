@@ -1,5 +1,5 @@
-#ifndef INCLUDE_OBJECT_VMModel_H
-#define INCLUDE_OBJECT_VMModel_H
+#ifndef VM_PAGE_INCLUDE_OBJECT_VM_Model_H
+#define VM_PAGE_INCLUDE_OBJECT_VM_Model_H
 
 // 虚拟存储器Model[主要是把一些 Memory,PCB,PageTable 结合到一起,打包传递给相关单元使用]
 typedef struct{

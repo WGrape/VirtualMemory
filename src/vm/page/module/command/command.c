@@ -19,7 +19,7 @@ void command_enter_interactive_env(VMModel vm_model){
 
 			// 打印出全部的进程
 			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
-				pmu_print_all_processes(vm_model.pcb.head);
+				pmu_print_all_processes(vm_model.pcb);
 				break;
 
 			// 创建一个新的进程
@@ -64,12 +64,18 @@ static void command_construct(VMModel vm_model){
 // 析构
 static void command_destruct(){
 
+	vmmu_free(
+
+		pmu_free(__vm_model__) // 进程管理单元释放掉所占内存
+	); // 虚拟存储器管理单元释放掉所占内存
+
+	// 销毁
 	__vm_model__ = {};
 }
 
 
 // 命令行输入新建进程的信息
-Process command_input_data_of_new_process(){
+static Process command_input_data_of_new_process(){
 
 	char name[PROCESS_NAME_LEN];
 	printf("Please enter the name of process: ");
@@ -83,13 +89,11 @@ Process command_input_data_of_new_process(){
 
 
 // 命令行输入中止进程的信息
-Process command_input_data_of_halt_process(){
+static Process command_input_data_of_halt_process(){
 
 	int process_id;
 	printf("Please enter the id of process: ");
 	scanf("%d",&process_id);
-
-	// 根据 pcb 块中的 count , count+1即为新进程的 id
 	Process process = {process_id:process_id};
 
 	return process;

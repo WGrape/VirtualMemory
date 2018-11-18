@@ -1,5 +1,5 @@
-#ifndef INCLUDE_OBJECT_MEMORY_H
-#define INCLUDE_OBJECT_MEMORY_H
+#ifndef INCLUDE_OBJECT_PCB_H
+#define INCLUDE_OBJECT_PCB_H
 
 // 进程控制块
 typedef struct{
