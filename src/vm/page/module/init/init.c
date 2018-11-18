@@ -34,6 +34,10 @@ static void page_vm_getCommandPackage(){
 			tail:pcb_head,
 			process_count:0
 		}
+		page_table : {
+
+			
+		}
 
 	};
 
