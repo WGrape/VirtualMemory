@@ -19,22 +19,11 @@ int command_enter_interactive_env(int vm_type){
 		scanf("%d",&option);
 		switch(option){
 
-			// 打印出所有的 process
-			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
+			case VM_MENU_OPTION_PRINT_ALL_PROCESSES: // 打印出所有的 process
+			case VM_MENU_OPTION_NEW_PROCESSES: // 新建 process
+			case VM_MENU_OPTION_HALT_PROCESSES: // 中止一个进程
 				
-				command_handle_option_print_all_processes();
-				break;
-			
-			// 新建 process
-			case VM_MENU_OPTION_NEW_PROCESSES:
-				
-				command_handle_option_new_process();
-				break;
-
-			// 中止一个进程
-			case VM_MENU_OPTION_HALT_PROCESSES:
-
-				command_handle_option_halt_process();
+				command_handle_vm_type_combine_option(vm_type,option);
 				break;
 
 			// 退出
@@ -101,35 +90,44 @@ static void command_destruct(){
 
 
 
-// 命令行处理选项： print all processes
-static void command_handle_option_print_all_processes(){
-
-	pmu_print_all_processes();
-}
-
-// 命令行处理选项： new process
-static void command_handle_option_new_process(){
-
-	mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(process) )));
+// 命令行处理选项
+static void command_handle_vm_type_combine_option(int vm_type,int option){
 
 	if(vm_type==VM_TYPE_PAGE){
 
-	}else if(vm_type==VM_TYPE_SEGMENT){
-
-	}else{
-
-	}
-}
-
-// 命令行处理选项： halt process
-static void command_handle_option_halt_process(){
-
-	if(vm_type==VM_TYPE_PAGE){
+		command_handle_page_vm_option(option);
 
 	}else if(vm_type==VM_TYPE_SEGMENT){
 
+		command_handle_segment_vm_option(option);
 	}else{
 
+		command_handle_segment_page_vm_option(option);
 	}
 }
 
+// 命令行处理页式虚拟存储器的选项
+static void command_handle_page_vm_option(int option){
+
+	// 打印出全部的进程
+	if(VM_MENU_OPTION_PRINT_ALL_PROCESSES==option){
+
+		pmu_print_all_processes(page_vm_command_package);
+	}else if(VM_MENU_OPTION_NEW_PROCESSES==option){
+
+		mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(page_vm_command_package) )));
+	}else{
+
+		mmu_unload_process(vmmu_unregister_process(pmu_halt_process( command_input_data_of_halt_process(page_vm_command_package) )));
+	}
+}
+
+// 命令行处理段式虚拟存储器的选项
+static void command_handle_segment_vm_option(int option){
+
+}
+
+// 命令行处理段页式虚拟存储器的选项
+static void command_handle_segment_page_vm_option(int option){
+
+}
