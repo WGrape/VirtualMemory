@@ -10,7 +10,7 @@ void page_vm_init(){
 	command_enter_interactive_env(page_vm_get_vm_model());
 }
 
-
+// 仅限内部使用
 static void page_vm_get_vm_model(){
 
 	int *memory_pr = mmu_alloc_memory();

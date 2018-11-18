@@ -2,13 +2,10 @@
 
 int main(){
 
+	int quit = 0;
 	int vm_type;
-	Memory memory;
 
-	while(1){
-
-		// 分配内存
-		memory.pr = mmu_alloc();
+	while(RES_OK != quit){
 
 		// 打印启动画面
 		ui_print_launch_view();
@@ -30,12 +27,8 @@ int main(){
 			segment_page_vm_init(memory);break;
 
 			// 退出
-			default:
-			break;
+			default: quit=1;break;
 		}
-
-		// 回收内存
-		mmu_collec(memory.pr);
 	}
 
 	printf("\nBye\n");

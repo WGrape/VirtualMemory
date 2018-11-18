@@ -6,13 +6,13 @@ void ui_print_launch_view(){
 }
 
 // 打印出欢迎语
-void ui_print_vm_welcome(){
+void ui_print_vm_welcome_view(){
 
 	printf("Page Virtual Memory Init Successfully !");
 }
 
 // 打印出菜单
-void ui_print_vm_menu(){
+void ui_print_vm_menu_view(){
 
 	printf("Services for you to choose\n1(Print All Proccesses) 2(New Process) 3(Destroy Process) 4(Exit)");
 }
