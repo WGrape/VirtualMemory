@@ -3,14 +3,29 @@
 // 创建新的进程
 Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 
-	// 记录到 PCB 中
-	ProcessLinkedNode *p = mmu_alloc_process_linked_node();
-	vm_model_pointer->pcb.tail.next = p;
-	*p = {
+	// 生成一个新的进程链结点
+	ProcessLinkedNode *node = mmu_alloc_process_linked_node();
+	int process_count = (vm_model_pointer->pcb.process_count)+1; // PCB中的进程个数+1
+	*node = {
 
-		process_id:vm_model_pointer->pcb.process_count+1,
+		process_id: process_count,
 		process_name: process.name,
+		process_extra："",
+
+		virtual_address:{
+
+			virtual_page_number: process_count //虚页号即为当前的进程个数
+		}
 	};
+
+	// 把这个新建的进程链结点记录到 PCB 中
+	if(vm_model_pointer->pcb.process_count<2){ // 当前新建的进程链结点是第一个结点
+
+		vm_model_pointer->pcb.head = node; // 赋给PCB中的头指针
+	}
+	vm_model_pointer->pcb.tail.next = node; // 把新的进程链结点连接到PCB的尾指针指向的下一个结点
+	vm_model_pointer->pcb.tail = node; // 赋给PCB中的尾指针
+
 
 	// 想想还有哪里需要记录 ...
 
