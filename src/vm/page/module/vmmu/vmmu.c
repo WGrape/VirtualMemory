@@ -1,6 +1,9 @@
 
 // 注册一个新的进程
-Process vmmu_register_process(Process process){
+Process vmmu_register_process(Process process,VMModel vm_model){
+
+	// 记录到 页表 中
+
 
 	return process;
 }

@@ -4,10 +4,11 @@
 
 
 // 创建新的进程
-Process pmu_new_process(Process process){
+Process pmu_new_process(Process process,VMModel vm_model){
 
-	// 记录到表中
+	// 记录到 PCB 中
 
+	return process;
 }
 
 // 销毁进程

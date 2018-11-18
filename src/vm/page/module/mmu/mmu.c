@@ -19,6 +19,7 @@ void mmu_collec(int *p){
 }
 
 // 载入一个新的进程
-void mmu_load_process(Process process){
+void mmu_load_process(Process process,VMModel vm_model){
 
+	// 载入内存中
 }

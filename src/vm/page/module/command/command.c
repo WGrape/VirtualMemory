@@ -1,14 +1,14 @@
 #include<stdio.h>
 
 
-static VMModel vm_model;
+static VMModel __vm_model__;
 
 
-void command_enter_interactive_env(VMModel _vm_model){
+void command_enter_interactive_env(VMModel vm_model){
 	
 	int option; // 菜单选项的选择
 
-	command_construct(_vm_model); // 初始化
+	command_construct(vm_model); // 初始化
 
 	while(1){
 
@@ -19,17 +19,31 @@ void command_enter_interactive_env(VMModel _vm_model){
 
 			// 打印出全部的进程
 			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
-				pmu_print_all_processes(page_vm_command_package.pcb.head);
+				pmu_print_all_processes(vm_model.pcb.head);
 				break;
 
 			// 创建一个新的进程
 			case VM_MENU_OPTION_NEW_PROCESSES:
-				mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(page_vm_command_package) )));
+				mmu_load_process(
+					vmmu_register_process(
+						pmu_new_process( 
+						
+							command_input_data_of_new_process(), __vm_model__
+						), __vm_model__
+					), __vm_model__
+				);
 				break;
 
 			// 中止一个进程
 			case VM_MENU_OPTION_HALT_PROCESSES:
-				mmu_unload_process(vmmu_unregister_process(pmu_halt_process( command_input_data_of_halt_process(page_vm_command_package) )));
+				mmu_unload_process(
+					vmmu_unregister_process(
+						pmu_halt_process( 
+						
+							command_input_data_of_halt_process(), __vm_model__
+						), __vm_model__
+					), __vm_model__
+				);
 				break;
 
 			// 退出
@@ -43,19 +57,19 @@ void command_enter_interactive_env(VMModel _vm_model){
 }
 
 // 构造函数
-static void command_construct(VMModel _vm_model){
+static void command_construct(VMModel vm_model){
 
-	vm_model = _vm_model;
+	__vm_model__ = vm_model;
 }
 // 析构
 static void command_destruct(){
 
-	vm_model = {};
+	__vm_model__ = {};
 }
 
 
 // 命令行输入新建进程的信息
-Process command_input_data_of_new_process(Process process){
+Process command_input_data_of_new_process(){
 
 	char name[PROCESS_NAME_LEN];
 	printf("Please enter the name of process: ");
