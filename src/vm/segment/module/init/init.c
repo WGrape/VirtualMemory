@@ -4,19 +4,20 @@
 void page_vm_init(){
 
 	// 打印页式存储器的欢迎语
-	ui_print_vm_welcome();
+	ui_print_vm_welcome(VM_TYPE_PAGE);
 
 	// 进入命令行交互环境
-	command_enter_interactive_env(page_vm_get_vm_model());
+	command_enter_interactive_env(VM_TYPE_PAGE);
+
 }
 
 
-static void page_vm_get_vm_model(){
+void page_vm_get_command_package(){
 
 	int *memory_pr = mmu_alloc_memory();
 	int *pcb_head = mmu_alloc_process_linked_node();
 
-	VMModel vm_model = {
+	PageVMCommandPackage package = {
 
 		vm_type : VM_TYPE_PAGE,
 		memory : {
@@ -38,6 +39,6 @@ static void page_vm_get_vm_model(){
 
 	};
 
-	return vm_model;
+	return package;
 }
 

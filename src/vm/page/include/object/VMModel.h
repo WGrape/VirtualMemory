@@ -1,5 +1,5 @@
-#ifndef INCLUDE_OBJECT_PAGE_VM_COMMAND_PACKAGE_H
-#define INCLUDE_OBJECT_PAGE_VM_COMMAND_PACKAGE_H
+#ifndef INCLUDE_OBJECT_VMModel_H
+#define INCLUDE_OBJECT_VMModel_H
 
 
 typedef struct{
@@ -12,7 +12,7 @@ typedef struct{
 	
 	PageTable page_table; // 页表
 
-}PageVMCommandPackage;
+}VMModel;
 
 
 #endif

@@ -6,9 +6,18 @@ void ui_print_launch_view(){
 }
 
 // 打印出欢迎语
-void ui_print_vm_welcome(){
+void ui_print_vm_welcome(int vm_type){
 
-	printf("Page Virtual Memory Init Successfully !");
+	if(vm_type==VM_TYPE_PAGE){
+
+		printf("Page Virtual Memory Init Successfully !");
+	}else if(vm_type==VM_TYPE_SEGMENT){
+
+		printf("Segment Virtual Memory Init Successfully !");
+	}else{
+
+		printf("Segment-Page Virtual Memory Init Successfully !");
+	}
 }
 
 // 打印出菜单
