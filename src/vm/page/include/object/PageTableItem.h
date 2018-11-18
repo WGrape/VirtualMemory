@@ -1,3 +1,7 @@
+#ifndef INCLUDE_OBJECT_PAGE_TABLE_ITEM_H
+#define INCLUDE_OBJECT_PAGE_TABLE_ITEM_H
+
+
 #include <stdio.h>
 
 
@@ -13,4 +17,4 @@ typedef struct {
 }PageTableItem;
 
 
-
+#endif
