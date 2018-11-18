@@ -11,8 +11,7 @@ typedef struct{
 
 
 	VirtualAddress *virtual_address; 	 // 进程的虚地址 = 虚页号+页内地址
-	PhysicalAddress *physical_address; 	 // 进的实地址 = 实页号+页内地址
-
+	// PhysicalAddress *physical_address; 	 // 进的实地址 = 实页号+页内地址
 
 	ProcessLinkedNode *next; // 指向下一个进程链结点
 

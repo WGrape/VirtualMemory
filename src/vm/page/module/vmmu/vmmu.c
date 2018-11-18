@@ -18,7 +18,7 @@ Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 
 		vm_model_pointer->page_table.head = node; // 赋给页表中的头指针
 	}
-	vm_model_pointer->page_table.tail.next = node; // 把新的页表项结点页表的尾指针指向的下一个元素
+	vm_model_pointer->page_table.tail.next = node; // 把新的页表项结点连接到页表的尾指针指向的下一个结点
 	vm_model_pointer->page_table.tail = node; // 赋给页表中的尾指针
 
 	// 想想还有哪里需要记录 ...

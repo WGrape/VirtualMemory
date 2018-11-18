@@ -3,13 +3,20 @@
 
 
 // 载入一个进程
-Process mmu_load_process(Process process,VMModel vm_model){
+Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 
 	// 进程载入内存中
+	int process_count = vm_model_pointer->pcb.process_count; // 获取PCB中当前的进程个数
+	*(vm_model_pointer->memory->next) = process.process_id;
+	(vm_model_pointer->memory->next)++;
+
+	// 想想还有哪里需要记录 ...
+
+	return process;
 }
 
 // 移载一个进程
-Process mmu_unload_process(Process process,VMModel vm_model){
+Process mmu_unload_process(Process process,VMModel *vm_model_pointer){
 
 	// 进程从内存中移除
 }

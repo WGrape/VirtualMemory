@@ -8,14 +8,20 @@ Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 	int process_count = (vm_model_pointer->pcb.process_count)+1; // PCB中的进程个数+1
 	*node = {
 
+		// 进程的相关信息
 		process_id: process_count,
 		process_name: process.name,
 		process_extra："",
 
+		// 进程的虚拟地址
 		virtual_address:{
 
-			virtual_page_number: process_count //虚页号即为当前的进程个数
-		}
+			virtual_page_number: process_count, //虚页号即为当前的进程个数
+			offset:(process_count%MEMORY_PAGE_SIZE) // 偏移量即为当前的进程个数 Mod MEMORY_PAGE_SIZE
+		},
+
+		// 指向下一个结点的指针
+		next: NULL
 	};
 
 	// 把这个新建的进程链结点记录到 PCB 中
