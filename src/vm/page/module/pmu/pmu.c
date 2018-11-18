@@ -1,8 +1,12 @@
 #include <stdio.h>
 
+
+
+
 // 创建新的进程
 Process pmu_new_process(Process process){
 
+	// 记录到表中
 
 }
 
