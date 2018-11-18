@@ -11,4 +11,8 @@
 #define VM_MENU_OPTION_NEW_PROCESSES 2;
 #define VM_MENU_OPTION_HALT_PROCESSES 3;
 
+
+#define PROCESS_NAME_LEN 20; // 线程名称的长度
+#define PROCESS_PROCESS_EXTRA_LEN_LEN 100; // 线程名称的长度
+
 #endif
