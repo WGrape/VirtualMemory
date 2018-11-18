@@ -12,9 +12,9 @@ Process pmu_new_process(Process process,VMModel vm_model){
 }
 
 // 销毁进程
-Process pmu_halt_process(Process process){
+Process pmu_halt_process(Process process,VMModel vm_model){
 
-
+	return process;
 }
 
 // 打印所有的进程

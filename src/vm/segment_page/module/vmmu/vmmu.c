@@ -1,17 +1,7 @@
 
 // 注册一个新的进程
-Process vmmu_register_process(Process process,VMModel vm_model){
+Process vmmu_register_process(Process process){
 
-	// 记录到 页表 中
-
-	return process;
-}
-
-// 注销一个进程
-Process vmmu_unregister_process(Process process,VMModel vm_model){
-
-	// 记录到 页表 中
-	
 	return process;
 }
 
