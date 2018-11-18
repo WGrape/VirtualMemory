@@ -41,18 +41,28 @@ Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 // 中止进程
 Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
 
-	// 移除存储在 PCB 中的数据
+	// 移除此进程在 PCB 中的存储的数据
+	ProcessLinkedNode *pre = NULL;
 	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
-	while(p->process_id != process.process_id){
+	while( NULL != p && p->process_id != process.process_id ){
 
+		pre = p;
 		p = p->next;
 	}
-
-	// 释放掉所占内存
 	if(p!=vm_model_pointer->pcb.head){
 
+		// 上一个结点连向即将移除的结点的下一个结点
+		pre->next=p->next;
+
+		// 释放掉所占内存
 		mmu_collec_process_linked_node(p);
 	}
+
+	// PCB中的进程数 -1
+	(vm_model_pointer->pcb.process_count)--;
+
+
+	// 想想还有哪里需要记录 ...
 
 	return process;
 }

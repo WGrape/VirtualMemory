@@ -2,7 +2,7 @@
 
 
 
-// 载入一个进程
+// 载入一个进程到内存中
 Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 
 	// 进程载入内存中
@@ -15,10 +15,13 @@ Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 	return process;
 }
 
-// 移载一个进程
+// 从内存中移除一个进程
 Process mmu_unload_process(Process process,VMModel *vm_model_pointer){
 
-	// 进程从内存中移除
+	// 根据进程的id去内存中查找，并移除
+	*((vm_model_pointer->memory->pr)+(process.process_id)-1) = -999999;
+
+	return process;
 }
 
 
