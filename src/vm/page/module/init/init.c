@@ -7,7 +7,7 @@ void page_vm_init(){
 	ui_print_vm_welcome(VM_TYPE_PAGE);
 
 	// 进入命令行交互环境
-	while(RES_OK == command_enter_interactive_env(page_vm_getCommandPackage())){
+	while(RES_OK == command_enter_interactive_env(VM_TYPE_PAGE)){
 
 	
 	}
@@ -15,12 +15,12 @@ void page_vm_init(){
 }
 
 
-static void page_vm_getCommandPackage(){
+void page_vm_get_command_package(){
 
 	int *memory_pr = mmu_alloc_memory();
 	int *pcb_head = mmu_alloc_process_linked_node();
 
-	CommandPackage commandPackage = {
+	PageVMCommandPackage package = {
 
 		vm_type : VM_TYPE_PAGE,
 		memory : {
@@ -36,11 +36,12 @@ static void page_vm_getCommandPackage(){
 		}
 		page_table : {
 
+			count:0
 			
 		}
 
 	};
 
-	return commandPackage;
+	return package;
 }
 

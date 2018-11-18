@@ -2,7 +2,7 @@
 
 int command_enter_interactive_env(int vm_type){
 
-	PCB pcb = {NULL};
+	// 菜单选项的选择
 	int option;
 	ui_print_vm_menu();
 	scanf("%d",&option);
@@ -11,20 +11,19 @@ int command_enter_interactive_env(int vm_type){
 		// 打印出所有的 process
 		case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
 			
-			process_manager_print_all(); 
+			command_handle_option_print_all_processes();
 			break;
 		
 		// 新建 process
 		case VM_MENU_OPTION_NEW_PROCESSES:
 			
-			Process process;
-			mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(process) )));
+			command_handle_option_new_process();
 			break;
 
 		// 中止一个进程
 		case VM_MENU_OPTION_HALT_PROCESSES:
 
-			process_manager_new(command_input_data_of_halt_process());
+			command_handle_option_halt_process();
 			break;
 
 		// 退出
@@ -62,3 +61,43 @@ Process command_input_data_of_halt_process(){
 
 	return process;
 }
+
+
+// 命令行处理选项： print all processes
+static void command_handle_option_print_all_processes(){
+
+	pmu_print_all_processes();
+}
+
+// 命令行处理选项： new process
+static void command_handle_option_new_process(){
+
+	mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(process) )));
+
+	if(vm_type==VM_TYPE_PAGE){
+
+		page_vm_get_command_package();
+	}else if(vm_type==VM_TYPE_SEGMENT){
+
+		segment_vm_get_command_package();
+	}else{
+
+		segment_page_vm_get_command_package();
+	}
+}
+
+// 命令行处理选项： halt process
+static void command_handle_option_halt_process(){
+
+	if(vm_type==VM_TYPE_PAGE){
+
+		page_vm_get_command_package();
+	}else if(vm_type==VM_TYPE_SEGMENT){
+
+		segment_vm_get_command_package();
+	}else{
+
+		segment_page_vm_get_command_package();
+	}
+}
+
