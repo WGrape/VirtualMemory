@@ -17,13 +17,14 @@ int command_enter_interactive_env(int vm_type){
 		// 新建 process
 		case VM_MENU_OPTION_NEW_PROCESSES:
 			
-			process_manager_new(command_input_data_of_new_process(pcb));
+			Process process;
+			mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(process) )));
 			break;
 
 		// 中止一个进程
 		case VM_MENU_OPTION_HALT_PROCESSES:
 
-			process_manager_new(command_input_data_of_halt_process(pcb));
+			process_manager_new(command_input_data_of_halt_process());
 			break;
 
 		// 退出
@@ -35,16 +36,29 @@ int command_enter_interactive_env(int vm_type){
 
 
 
-
-Process command_input_data_of_new_process(PCB pcb){
+// 命令行输入新建进程的信息
+Process command_input_data_of_new_process(Process process){
 
 	char name[PROCESS_NAME_LEN];
 	printf("Please enter the name of process: ");
 	scanf("%s",&name);
 
 	// 根据 pcb 块中的 count , count+1即为新进程的 id
-	Process process = {process_id:(pcb->count)+1,process_name:name};
+	Process process = {process_name:name};
 
+	return process;
 }
 
 
+// 命令行输入中止进程的信息
+Process command_input_data_of_halt_process(){
+
+	int process_id;
+	printf("Please enter the id of process: ");
+	scanf("%d",&process_id);
+
+	// 根据 pcb 块中的 count , count+1即为新进程的 id
+	Process process = {process_id:process_id};
+
+	return process;
+}
