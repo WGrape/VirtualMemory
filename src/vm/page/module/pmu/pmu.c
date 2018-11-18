@@ -9,15 +9,15 @@ Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 	*node = {
 
 		// 进程的相关信息
-		process_id: process_count,
+		process_id: process_count, // 进程 id 是从 1 开始的，最小的进程 id 就是1
 		process_name: process.name,
 		process_extra："",
 
 		// 进程的虚拟地址
 		virtual_address:{
 
-			virtual_page_number: process_count, //虚页号即为当前的进程个数
-			offset:(process_count%MEMORY_PAGE_SIZE) // 偏移量即为当前的进程个数 Mod MEMORY_PAGE_SIZE
+			virtual_page_number: process_count, //虚页号 : 即为当前的进程个数
+			offset:(process_count%MEMORY_PAGE_SIZE) // 偏移量 : 即为当前的进程个数 Mod MEMORY_PAGE_SIZE
 		},
 
 		// 指向下一个结点的指针
@@ -41,7 +41,7 @@ Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 // 中止进程
 Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
 
-	// 移除此进程在 PCB 中的存储的数据
+	// 移除此进程在 PCB 中的进程链结点数据
 	ProcessLinkedNode *pre = NULL;
 	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
 	while( NULL != p && p->process_id != process.process_id ){

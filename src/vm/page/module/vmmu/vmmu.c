@@ -1,5 +1,5 @@
 
-// 注册一个新的进程
+// 注册一个新的进程到页表中 
 Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 
 	// 创建一个新的页表项结点
@@ -26,11 +26,32 @@ Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 	return process;
 }
 
-// 注销一个进程
+// 把页表中的一个进程注销掉
 Process vmmu_unregister_process(Process process,VMModel *vm_model_pointer){
 
 	// 注销记录在页表中的此进程的数据
-	
+	ProcessLinkedNode *pre = NULL;
+	ProcessLinkedNode *p = vm_model_pointer->page_table.head;
+	while( NULL != p && p->process_id != process.process_id ){
+
+		pre = p;
+		p = p->next;
+	}
+	if(p!=vm_model_pointer->pcb.head){
+
+		// 上一个结点连向即将移除的结点的下一个结点
+		pre->next=p->next;
+
+		// 释放掉所占内存
+		mmu_collec_process_linked_node(p);
+	}
+
+	// PCB中的进程数 -1
+	(vm_model_pointer->pcb.process_count)--;
+
+
+	// 想想还有哪里需要记录 ...
+
 	return process;
 }
 

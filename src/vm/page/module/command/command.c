@@ -30,14 +30,24 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 
 			// 中止一个进程
 			case VM_MENU_OPTION_HALT_PROCESSES:
-				mmu_unload_process(
+				
+				pmu_halt_process(
 					vmmu_unregister_process(
-						pmu_halt_process( 
+						mmu_unload_process( 
 						
 							command_input_data_of_halt_process(), vm_model_pointer
 						), vm_model_pointer
 					), vm_model_pointer
 				);
+
+				// mmu_unload_process(
+				// 	vmmu_unregister_process(
+				// 		pmu_halt_process( 
+						
+				// 			command_input_data_of_halt_process(), vm_model_pointer
+				// 		), vm_model_pointer
+				// 	), vm_model_pointer
+				// );
 				break;
 
 			// 退出
