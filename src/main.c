@@ -8,25 +8,26 @@ int main(){
 	while(1){
 
 		// 分配内存
-		memory.pr = memory_manager_alloc();
+		memory.pr = mmu_alloc();
 
-		ui_print_launch();
+		// 打印启动画面
+		ui_print_launch_view();
 
 		// 选择使用不同的虚拟存储器
 		scanf("%d",&vm_type);
-		switch(virtual_memory_type){
+		switch(vm_type){
 
 			// 页式虚拟存储器
 			case VM_TYPE_PAGE:
-			page_virtual_memory_init();break;
+			page_vm_init(memory);break;
 
 			// 段式虚拟存储器
 			case VM_TYPE_SEGMENT:
-			segment_virtual_memory_init();break;
+			segment_vm_init(memory);break;
 
 			// 段页式虚拟存储器
 			case VM_TYPE_SEGMENT_PAGE:
-			segment_page_virtual_memory_init();break;
+			segment_page_vm_init(memory);break;
 
 			// 退出
 			default:
@@ -34,7 +35,7 @@ int main(){
 		}
 
 		// 回收内存
-		memory_manager_collec(memory.pr);
+		mmu_collec(memory.pr);
 	}
 
 	printf("\nBye\n");

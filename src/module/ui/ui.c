@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-void ui_print_launch(){
+void ui_print_launch_view(){
 
 	printf("Choose the different types of virtual memory\n1(Page) 2(Segment) 3(SegmentPage) 4(Quit) : ");	
 }
