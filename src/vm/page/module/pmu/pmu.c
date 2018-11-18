@@ -5,7 +5,7 @@ Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 
 	// 记录到 PCB 中
 	ProcessLinkedNode *p = mmu_alloc_process_linked_node();
-	vm_model_pointer->pcb.tail.p = p;
+	vm_model_pointer->pcb.tail.next = p;
 	*p = {
 
 		process_id:vm_model_pointer->pcb.process_count+1,

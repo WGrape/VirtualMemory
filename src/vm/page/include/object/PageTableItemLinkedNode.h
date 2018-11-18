@@ -12,9 +12,12 @@ typedef struct {
 
 	int virtual_page_number; // 虚页号
 	int physical_page_number; // 实页号
-	int load_flag; // 是否已装入内存
+	
+	int load; // 是否已装入内存
 
-}PageTableItem;
+	PageTableItemLinkedNode *next; // 指向下一个页表项结点
+
+}PageTableItemLinkedNode;
 
 
 #endif
