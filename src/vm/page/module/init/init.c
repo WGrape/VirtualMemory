@@ -7,10 +7,7 @@ void page_vm_init(){
 	ui_print_vm_welcome(VM_TYPE_PAGE);
 
 	// 进入命令行交互环境
-	while(RES_OK == command_enter_interactive_env(VM_TYPE_PAGE)){
-
-	
-	}
+	command_enter_interactive_env(VM_TYPE_PAGE);
 
 }
 

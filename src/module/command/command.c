@@ -1,36 +1,50 @@
 #include<stdio.h>
 
+
+static PageVMCommandPackage page_vm_command_package;
+static SegmentPageVMCommandPackage segment_page_vm_command_package;
+static SegmentVMCommandPackage segment_vm_commandPackage;
+
+
 int command_enter_interactive_env(int vm_type){
 
-	// 菜单选项的选择
-	int option;
-	ui_print_vm_menu();
-	scanf("%d",&option);
-	switch(option){
+	
+	int option; // 菜单选项的选择
 
-		// 打印出所有的 process
-		case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
+	command_construct(); // 初始化
+
+	while(1){
+
+		ui_print_vm_menu();
+		scanf("%d",&option);
+		switch(option){
+
+			// 打印出所有的 process
+			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
+				
+				command_handle_option_print_all_processes();
+				break;
 			
-			command_handle_option_print_all_processes();
-			break;
-		
-		// 新建 process
-		case VM_MENU_OPTION_NEW_PROCESSES:
-			
-			command_handle_option_new_process();
-			break;
+			// 新建 process
+			case VM_MENU_OPTION_NEW_PROCESSES:
+				
+				command_handle_option_new_process();
+				break;
 
-		// 中止一个进程
-		case VM_MENU_OPTION_HALT_PROCESSES:
+			// 中止一个进程
+			case VM_MENU_OPTION_HALT_PROCESSES:
 
-			command_handle_option_halt_process();
-			break;
+				command_handle_option_halt_process();
+				break;
 
-		// 退出
-		default:
-			return(); 
-			break;
+			// 退出
+			default:
+				command_destruct();
+				return(); 
+				break;
+		}
 	}
+
 }
 
 
@@ -62,6 +76,30 @@ Process command_input_data_of_halt_process(){
 	return process;
 }
 
+// 初始化
+static void command_construct(){
+
+	if(vm_type==VM_TYPE_PAGE){
+
+		page_vm_command_package = page_vm_get_command_package();
+	}else if(vm_type==VM_TYPE_SEGMENT){
+
+		segment_page_vm_command_package = segment_vm_get_command_package();
+	}else{
+
+		segment_vm_commandPackage = segment_page_vm_get_command_package();
+	}
+}
+
+// 析构
+static void command_destruct(){
+
+	page_vm_command_package = {};
+	segment_page_vm_command_package = {};
+	segment_vm_commandPackage ={};
+}
+
+
 
 // 命令行处理选项： print all processes
 static void command_handle_option_print_all_processes(){
@@ -76,13 +114,10 @@ static void command_handle_option_new_process(){
 
 	if(vm_type==VM_TYPE_PAGE){
 
-		page_vm_get_command_package();
 	}else if(vm_type==VM_TYPE_SEGMENT){
 
-		segment_vm_get_command_package();
 	}else{
 
-		segment_page_vm_get_command_package();
 	}
 }
 
@@ -91,13 +126,10 @@ static void command_handle_option_halt_process(){
 
 	if(vm_type==VM_TYPE_PAGE){
 
-		page_vm_get_command_package();
 	}else if(vm_type==VM_TYPE_SEGMENT){
 
-		segment_vm_get_command_package();
 	}else{
 
-		segment_page_vm_get_command_package();
 	}
 }
 
