@@ -5,6 +5,7 @@
 typedef struct {
 	
 	int *pr; // 指向内存的基地址
+	int *next; // 指向内存的下一个单元
 
 }Memory;
 

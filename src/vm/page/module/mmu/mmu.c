@@ -3,7 +3,13 @@
 // 分配内存
 int* mmu_alloc_memory(){
 
-	return (int*)malloc(sizeof(int)*1000);
+	int *p = (int*)malloc(sizeof(int)*1000);
+	if(!p){
+
+		exit(1);
+	}
+
+	return p;
 }
 
 // 收回内存
@@ -15,7 +21,19 @@ void mmu_collec_memory(int *p){
 // 分配 ProcessLinkedNode
 ProcessLinkedNode* mmu_alloc_process_linked_node(){
 
-	return (ProcessLinkedNode*)malloc(sizeof(ProcessLinkedNode)*1);	
+	ProcessLinkedNode *p = (ProcessLinkedNode*)malloc(sizeof(ProcessLinkedNode)*1);	
+	if(!p){
+
+		exit(1);
+	}
+
+	return p;
+}
+
+// 回收 ProcessLinkedNode
+void mmu_collec_process_linked_node(ProcessLinkedNode *p){
+
+	free(p);
 }
 
 // 载入一个进程

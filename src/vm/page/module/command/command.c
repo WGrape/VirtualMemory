@@ -1,14 +1,8 @@
 #include<stdio.h>
 
-
-static VMModel __vm_model__;
-
-
-void command_enter_interactive_env(VMModel vm_model){
+void command_enter_interactive_env(VMModel *vm_model_pointer){
 	
 	int option; // 菜单选项的选择
-
-	command_construct(vm_model); // 初始化
 
 	while(1){
 
@@ -19,7 +13,7 @@ void command_enter_interactive_env(VMModel vm_model){
 
 			// 打印出全部的进程
 			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
-				pmu_print_all_processes(vm_model.pcb);
+				pmu_print_all_processes(vm_model_pointer);
 				break;
 
 			// 创建一个新的进程
@@ -28,9 +22,9 @@ void command_enter_interactive_env(VMModel vm_model){
 					vmmu_register_process(
 						pmu_new_process( 
 						
-							command_input_data_of_new_process(), __vm_model__
-						), __vm_model__
-					), __vm_model__
+							command_input_data_of_new_process(), vm_model_pointer
+						), vm_model_pointer
+					), vm_model_pointer
 				);
 				break;
 
@@ -40,37 +34,20 @@ void command_enter_interactive_env(VMModel vm_model){
 					vmmu_unregister_process(
 						pmu_halt_process( 
 						
-							command_input_data_of_halt_process(), __vm_model__
-						), __vm_model__
-					), __vm_model__
+							command_input_data_of_halt_process(), vm_model_pointer
+						), vm_model_pointer
+					), vm_model_pointer
 				);
 				break;
 
 			// 退出
 			default:
-				command_destruct();
 				return(); 
 				break;
 		}
 	}
 
-}
-
-// 构造函数
-static void command_construct(VMModel vm_model){
-
-	__vm_model__ = vm_model;
-}
-// 析构
-static void command_destruct(){
-
-	vmmu_free(
-
-		pmu_free(__vm_model__) // 进程管理单元释放掉所占内存
-	); // 虚拟存储器管理单元释放掉所占内存
-
-	// 销毁
-	__vm_model__ = {};
+	return;
 }
 
 
