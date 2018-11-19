@@ -9,7 +9,7 @@
 
 ## ✎ 摘要（Synopsis）
 
-<img src="https://github.com/Lvsi-China/VirtualMemory/raw/master/extra/image/logo.jpg">
+<img src="https://github.com/Lvsi-China/VirtualMemory/raw/master/extra/images/logo.jpg">
 
 本项目将完成虚拟存储器虚拟存储器的C语言实现，虚拟存储器作为计算机组成原理课程的重点和难点，只通过书本上的学习是永远不够的，远远不如自己亲手实现一个虚拟存储器，所谓的```纸上得来终觉浅，绝知此事要躬行```即是如此。
 
