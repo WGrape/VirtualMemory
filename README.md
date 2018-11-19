@@ -2,6 +2,7 @@
 计算机组成原理中虚拟存储器的实现（A Virtual Memory Implementation In Computer Organization）
 
 <br>
+
 > ### 不断更新中( updating ) ...
 
 <br>
@@ -19,7 +20,8 @@
 
 ## ➴ 教程（Tutorial）
 
-- [基础理论学习](https://github.com/Lvsi-China/VirtualMemory/blob/master/docs/1.md)
+- [虚拟存储器的基础理论学习](https://github.com/Lvsi-China/VirtualMemory/blob/master/docs/1.md)
+- [更多计算机组成原理理论的学习](https://github.com/Lvsi-China/CSTheory)
 
 <br/>
 
