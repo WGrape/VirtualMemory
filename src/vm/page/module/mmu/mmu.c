@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <include/object/Process.h>
 #include <vm/page/include/object/VMModel.h>
+#include <vm/page/module/ui/ui.h>
+#include <module/system/system.h>
 
 // 载入一个进程到内存中
 Process mmu_load_process(Process process,VMModel *vm_model_pointer){
@@ -51,10 +53,11 @@ void mmu_collec_memory(int *p){
 // 分配 ProcessLinkedNode
 ProcessLinkedNode* mmu_alloc_process_linked_node(){
 
-	ProcessLinkedNode *p = (ProcessLinkedNode*)malloc(sizeof(ProcessLinkedNode)*1);	
-	if(!p){
+	ProcessLinkedNode *p = (ProcessLinkedNode*)malloc(sizeof(ProcessLinkedNode)*1);
 
-		exit(1);
+	if( NULL == p){
+
+        system_exit("malloc with a failure");
 	}
 
 	return p;
@@ -72,7 +75,7 @@ void mmu_collec_process_linked_node(ProcessLinkedNode *p){
 PageTableItemLinkedNode* mmu_alloc_page_table_item_linked_node(){
 
 	PageTableItemLinkedNode *p = (PageTableItemLinkedNode*)malloc(sizeof(PageTableItemLinkedNode)*1);	
-	if(!p){
+	if(NULL == p){
 
 		exit(1);
 	}

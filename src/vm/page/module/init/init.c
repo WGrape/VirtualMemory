@@ -56,21 +56,21 @@ static void page_vm_destruct(){
 	// 销毁
 	VMModel vm_model = {
 
-			memory : {
+		memory : {
 
-					pr: NULL,
-					next:NULL
-			},
-			pcb : {
+				pr: NULL,
+				next:NULL
+		},
+		pcb : {
 
-					head:NULL,
-					tail:NULL,
-					process_count:0
-			},
-			page_table : {
+				head:NULL,
+				tail:NULL,
+				process_count:0
+		},
+		page_table : {
 
-					page_table_item_count:0
-			}
+				page_table_item_count:0
+		}
 	};
 	__vm_model__ = vm_model;
 	__vm_model_pointer__ = NULL;

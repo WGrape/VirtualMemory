@@ -40,5 +40,5 @@ add_executable(main ./main.c
         ${VM_DIR}/page/module/vmmu/vmmu.h
 
 
-        )
+        module/system/system.c module/system/system.h)
 

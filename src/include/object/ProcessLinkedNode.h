@@ -4,7 +4,7 @@
 #include "VirtualAddress.h"
 
 // 进程链结点
-typedef struct{
+typedef struct ProcessLinkedNode{
 
 	// 由 pmmu 负责填充
 	int process_id; // 进程的 id
@@ -15,9 +15,12 @@ typedef struct{
 	VirtualAddress virtual_address; 	 // 进程的虚地址 = 虚页号+页内地址
 	// PhysicalAddress *physical_address; 	 // 进的实地址 = 实页号+页内地址
 
+	// 必须这样写 typedef struct ProcessLinkedNode
 	struct ProcessLinkedNode *next; // 指向下一个进程链结点
 
 }ProcessLinkedNode;
 
 
 #endif
+
+
