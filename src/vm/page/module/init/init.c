@@ -54,7 +54,25 @@ static void page_vm_destruct(){
 	); // 虚拟存储器管理单元释放掉所占内存
 
 	// 销毁
-	__vm_model__ = ;
+	VMModel vm_model = {
+
+			memory : {
+
+					pr: NULL,
+					next:NULL
+			},
+			pcb : {
+
+					head:NULL,
+					tail:NULL,
+					process_count:0
+			},
+			page_table : {
+
+					page_table_item_count:0
+			}
+	};
+	__vm_model__ = vm_model;
 	__vm_model_pointer__ = NULL;
 }
 

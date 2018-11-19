@@ -1,36 +1,41 @@
 #include <stdio.h>
+#include <include/object/Process.h>
+#include <vm/page/include/object/VMModel.h>
+#include <vm/page/module/mmu/mmu.h>
+#include <include/define/constant.h>
+#include <include/object/PCB.h>
 
 // 创建新的进程
 Process pmu_new_process(Process process,VMModel *vm_model_pointer){
 
 	// 生成一个新的进程链结点
-	ProcessLinkedNode *node = mmu_alloc_process_linked_node();
+	ProcessLinkedNode *node_pointer = mmu_alloc_process_linked_node();
 	int process_count = (vm_model_pointer->pcb.process_count)+1; // PCB中的进程个数+1
-	*node = {
+	ProcessLinkedNode tempNode = {
 
 		// 进程的相关信息
 		process_id: process_count, // 进程 id 是从 1 开始的，最小的进程 id 就是1
-		process_name: process.name,
-		process_extra："",
+		process_name: process.process_name,
+		process_extra:"",
 
 		// 进程的虚拟地址
 		virtual_address:{
 
-			virtual_page_number: process_count, //虚页号 : 即为当前的进程个数
-			offset:(process_count%MEMORY_PAGE_SIZE) // 偏移量 : 即为当前的进程个数 Mod MEMORY_PAGE_SIZE
+				virtual_page_number: process_count, //虚页号 : 即为当前的进程个数
+				offset:(process_count%MEMORY_PAGE_SIZE) // 偏移量 : 即为当前的进程个数 Mod MEMORY_PAGE_SIZE
 		},
 
 		// 指向下一个结点的指针
 		next: NULL
-	};
+	};*node_pointer = tempNode;
 
 	// 把这个新建的进程链结点记录到 PCB 中
 	if(vm_model_pointer->pcb.process_count<2){ // 当前新建的进程链结点是第一个结点
 
-		vm_model_pointer->pcb.head = node; // 赋给PCB中的头指针
+		vm_model_pointer->pcb.head = node_pointer; // 赋给PCB中的头指针
 	}
-	vm_model_pointer->pcb.tail.next = node; // 把新的进程链结点连接到PCB的尾指针指向的下一个结点
-	vm_model_pointer->pcb.tail = node; // 赋给PCB中的尾指针
+	vm_model_pointer->pcb.tail->next = node_pointer; // 把新的进程链结点连接到PCB的尾指针指向的下一个结点
+	vm_model_pointer->pcb.tail = node_pointer; // 赋给PCB中的尾指针
 
 
 	// 想想还有哪里需要记录 ...
@@ -71,14 +76,14 @@ Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
 void pmu_print_all_processes(VMModel *vm_model_pointer){
 
 	int i=0;
-	ProcessLinkedNode *p = vm_model_pointer->pcb->head;
+	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
 	
-	printf("The total process count is : %d , now print the all process below\n",pcb->count);
+	printf("The total process count is : %d , now print the all process below\n",vm_model_pointer->pcb.process_count);
 	while(NULL!=p){ // 这样写的好处是防止写成赋值号，而且更突出重点
 
 		++i;
-		printf("%dth process , id: %d , name: %s \n"i,p->process_id, p->process_name);
-		p = p->p;
+		printf("%dth process , id: %d , name: %s \n",i,p->process_id, p->process_name);
+		p = p->next;
 	}
 	printf("-----------------END-----------------\n");
 	

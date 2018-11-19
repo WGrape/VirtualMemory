@@ -1,5 +1,10 @@
 
-// 注册一个新的进程到页表中 
+#include <include/object/Process.h>
+#include <vm/page/include/object/VMModel.h>
+#include <vm/page/module/mmu/mmu.h>
+#include <include/define/constant.h>
+
+// 注册一个新的进程到页表中
 Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 
 	// 创建一个新的页表项结点
@@ -8,7 +13,7 @@ Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 	*node = {
 
 		virtual_page_number: page_table_item_count, // 虚页号
-		physical_page_number: (page_table_item_count/MEMORY_PAGE_SIZE)+1 // 实页号
+		physical_page_number: (page_table_item_count/MEMORY_PAGE_SIZE)+1, // 实页号
 		load:1,
 		next:NULL
 	};
@@ -18,7 +23,7 @@ Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 
 		vm_model_pointer->page_table.head = node; // 赋给页表中的头指针
 	}
-	vm_model_pointer->page_table.tail.next = node; // 把新的页表项结点连接到页表的尾指针指向的下一个结点
+	vm_model_pointer->page_table.tail->next = node; // 把新的页表项结点连接到页表的尾指针指向的下一个结点
 	vm_model_pointer->page_table.tail = node; // 赋给页表中的尾指针
 
 	// 想想还有哪里需要记录 ...

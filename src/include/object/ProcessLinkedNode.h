@@ -12,7 +12,7 @@ typedef struct{
 	char *process_extra; // 进程的 extra 信息
 
 
-	VirtualAddress *virtual_address; 	 // 进程的虚地址 = 虚页号+页内地址
+	VirtualAddress virtual_address; 	 // 进程的虚地址 = 虚页号+页内地址
 	// PhysicalAddress *physical_address; 	 // 进的实地址 = 实页号+页内地址
 
 	struct ProcessLinkedNode *next; // 指向下一个进程链结点
