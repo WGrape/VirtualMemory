@@ -1,14 +1,16 @@
 // 内存中只存放 int 数据( process_id )
 
-
+#include <stdlib.h>
+#include <include/object/Process.h>
+#include <vm/page/include/object/VMModel.h>
 
 // 载入一个进程到内存中
 Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 
 	// 进程载入内存中
-	int process_count = vm_model_pointer->pcb.process_count; // 获取PCB中当前的进程个数
-	*(vm_model_pointer->memory->next) = process.process_id;
-	(vm_model_pointer->memory->next)++;
+	// int process_count = vm_model_pointer->pcb.process_count; // 获取PCB中当前的进程个数
+	*(vm_model_pointer->memory.next) = process.process_id;
+	(vm_model_pointer->memory.next)++;
 
 	// 想想还有哪里需要记录 ...
 
@@ -19,12 +21,10 @@ Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 Process mmu_unload_process(Process process,VMModel *vm_model_pointer){
 
 	// 根据进程的id去内存中查找，并移除
-	*((vm_model_pointer->memory->pr)+(process.process_id)-1) = -999999;
+	*((vm_model_pointer->memory.pr)+(process.process_id)-1) = -999999;
 
 	return process;
 }
-
-
 
 
 
@@ -46,6 +46,8 @@ void mmu_collec_memory(int *p){
 	free(p);
 }
 
+
+
 // 分配 ProcessLinkedNode
 ProcessLinkedNode* mmu_alloc_process_linked_node(){
 
@@ -63,6 +65,8 @@ void mmu_collec_process_linked_node(ProcessLinkedNode *p){
 
 	free(p);
 }
+
+
 
 // 分配 PageTableItemLinkedNode
 PageTableItemLinkedNode* mmu_alloc_page_table_item_linked_node(){

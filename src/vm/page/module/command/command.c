@@ -1,72 +1,56 @@
 #include<stdio.h>
+#include <vm/page/include/object/VMModel.h>
+#include <vm/page/module/ui/ui.h>
+#include <include/define/constant.h>
+#include <vm/page/module/pmu/pmu.h>
+#include <vm/page/module/mmu/mmu.h>
+#include <vm/page/module/vmmu/vmmu.h>
 
+// 声明
+static Process command_input_data_of_new_process();
+static Process command_input_data_of_halt_process();
+static void command_handle_new_process(VMModel *vm_model_pointer);
+static void command_handle_halt_process(VMModel *vm_model_pointer);
+
+
+// 入口
 void command_enter_interactive_env(VMModel *vm_model_pointer){
 	
 	int option; // 菜单选项的选择
 
-	while(1){
+	for(;;){ // 外层是while(1)大循环
 
 		// 打印菜单并选择选项
-		ui_print_vm_menu();
+		ui_print_vm_menu_view();
 		scanf("%d",&option);
 		switch(option){
 
 			// 打印出全部的进程
 			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
-				pmu_print_all_processes(vm_model_pointer);
-				break;
+				pmu_print_all_processes(vm_model_pointer);break;
 
 			// 创建一个新的进程
 			case VM_MENU_OPTION_NEW_PROCESSES:
-				mmu_load_process(
-					vmmu_register_process(
-						pmu_new_process( 
-						
-							command_input_data_of_new_process(), vm_model_pointer
-						), vm_model_pointer
-					), vm_model_pointer
-				);
-				break;
+				command_handle_new_process(vm_model_pointer);break;
 
 			// 中止一个进程
 			case VM_MENU_OPTION_HALT_PROCESSES:
-				
-				pmu_halt_process(
-					vmmu_unregister_process(
-						mmu_unload_process( 
-						
-							command_input_data_of_halt_process(), vm_model_pointer
-						), vm_model_pointer
-					), vm_model_pointer
-				);
-
-				// mmu_unload_process(
-				// 	vmmu_unregister_process(
-				// 		pmu_halt_process( 
-						
-				// 			command_input_data_of_halt_process(), vm_model_pointer
-				// 		), vm_model_pointer
-				// 	), vm_model_pointer
-				// );
-				break;
+				command_handle_halt_process(vm_model_pointer);break;
 
 			// 退出
 			default:
-				return(); 
-				break;
+				return;break;
 		}
 	}
-
-	return;
 }
 
 
 // 命令行输入新建进程的信息
 static Process command_input_data_of_new_process(){
 
-	char name[PROCESS_NAME_LEN];
+	char *name = "";
 	printf("Please enter the name of process: ");
-	scanf("%s",&name);
+	scanf("%s",name);
 
 	// 根据 pcb 块中的 count , count+1即为新进程的 id
 	Process process = {process_name:name};
@@ -85,3 +69,30 @@ static Process command_input_data_of_halt_process(){
 
 	return process;
 }
+
+// 命令行处理新建一个进程
+static void command_handle_new_process(VMModel *vm_model_pointer){
+
+	mmu_load_process(
+			vmmu_register_process(
+					pmu_new_process(
+
+							command_input_data_of_new_process(), vm_model_pointer
+					), vm_model_pointer
+			), vm_model_pointer
+	);
+}
+
+// 命令行处理中止一个进程
+static void command_handle_halt_process(VMModel *vm_model_pointer){
+
+	pmu_halt_process(
+			vmmu_unregister_process(
+					mmu_unload_process(
+
+							command_input_data_of_halt_process(), vm_model_pointer
+					), vm_model_pointer
+			), vm_model_pointer
+	);
+}
+

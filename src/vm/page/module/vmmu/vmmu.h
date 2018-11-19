@@ -1,6 +1,7 @@
 #ifndef MODULE_VMMU_H
 #define MODULE_VMMU_H
 
+#include<include/object/Process.h>
 
 extern Process vmmu_register_process(Process process,VMModel *vm_model_pointer);
 
