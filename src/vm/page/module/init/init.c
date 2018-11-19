@@ -1,4 +1,10 @@
 #include<stdio.h>
+#include <vm/page/include/object/VMModel.h>
+#include <vm/page/module/ui/ui.h>
+#include <vm/page/module/command/command.h>
+#include <vm/page/module/vmmu/vmmu.h>
+#include <vm/page/module/pmu/pmu.h>
+#include <vm/page/module/mmu/mmu.h>
 
 
 static VMModel __vm_model__; // 全局静态的 __vm_model__ , 存储了全部的数据 = Memory+PCB+PageTable
@@ -11,7 +17,7 @@ void page_vm_init(){
 	page_vm_construct();
 
 	// 打印页式存储器的欢迎语
-	ui_print_vm_welcome();
+	ui_print_vm_welcome_view();
 
 	// 进入命令行交互环境
 	command_enter_interactive_env(__vm_model_pointer__);
@@ -21,14 +27,14 @@ void page_vm_init(){
 }
 
 // 构造函数
-static void command_construct(){
+static void page_vm_construct(){
 
 	__vm_model__ = page_vm_get_vm_model();
 	__vm_model_pointer__ = &(__vm_model__);
 }
 
 // 析构
-static void command_destruct(){
+static void page_vm_destruct(){
 
 	vmmu_free(
 
@@ -42,13 +48,12 @@ static void command_destruct(){
 
 
 // 仅限内部使用
-static void page_vm_get_vm_model(){
+static VMModel page_vm_get_vm_model(){
 
 	// 分配一块内存
 	int *memory_pr = mmu_alloc_memory();
 
 	VMModel vm_model = {
-
 		memory : {
 
 			pr: memory_pr,
@@ -59,10 +64,10 @@ static void page_vm_get_vm_model(){
 			head:NULL,
 			tail:NULL,
 			process_count:0
-		}
+		},
 		page_table : {
 
-			count:0
+			page_table_item_count:0
 			
 		}
 

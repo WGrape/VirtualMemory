@@ -1,8 +1,8 @@
 #ifndef VM_PAGE_INCLUDE_OBJECT_PAGE_TABLE_H
 #define VM_PAGE_INCLUDE_OBJECT_PAGE_TABLE_H
 
-
 #include <stdio.h>
+#include "PageTableItemLinkedNode.h"
 
 // 页表结构
 typedef struct {

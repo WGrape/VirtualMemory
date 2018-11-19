@@ -28,7 +28,7 @@
 ## <span id="article-usage">♗ 使用（Usage）</span>
 	1. 下载项目( Download )
 
-	2. 编译 main.c 文件然后运行
+	2. 编译源码 src/main.c 文件然后运行
 <br>
 
 ## ♘ 用途（Introduction）
