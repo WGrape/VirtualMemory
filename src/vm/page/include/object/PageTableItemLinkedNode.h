@@ -7,7 +7,7 @@
 // 页表项
 // 页表是一张存储着主存中的虚页号和实页号的对照表
 
-typedef struct {
+typedef struct PageTableItemLinkedNode {
 
 	int virtual_page_number; // 虚页号
 	int physical_page_number; // 实页号

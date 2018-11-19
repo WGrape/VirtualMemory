@@ -5,8 +5,11 @@
 #include <vm/page/module/pmu/pmu.h>
 #include <vm/page/module/mmu/mmu.h>
 #include <vm/page/module/vmmu/vmmu.h>
+#include <module/system/system.h>
+#include <include/object/Process.h>
 
 // 声明
+static Process __process__;
 static Process command_input_data_of_new_process();
 static Process command_input_data_of_halt_process();
 static void command_handle_new_process(VMModel *vm_model_pointer);
@@ -39,7 +42,7 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 
 			// 退出
 			default:
-				return;break;
+				return;
 		}
 	}
 }
@@ -48,14 +51,17 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 // 命令行输入新建进程的信息
 static Process command_input_data_of_new_process(){
 
-	char *name = "";
+	char name[PROCESS_LIMIT_NAME_MAX_LEN];
 	printf("Please enter the name of process: ");
 	scanf("%s",name);
 
 	// 根据 pcb 块中的 count , count+1即为新进程的 id
-	Process process = {process_name:name};
+	Process process = {
 
-	return process;
+		process_name:name
+	};
+	__process__ = process;
+	return __process__;
 }
 
 
@@ -81,6 +87,8 @@ static void command_handle_new_process(VMModel *vm_model_pointer){
 					), vm_model_pointer
 			), vm_model_pointer
 	);
+
+	ui_print_operate_success();
 }
 
 // 命令行处理中止一个进程
