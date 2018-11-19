@@ -4,37 +4,29 @@
 #include <vm/page/module/mmu/mmu.h>
 #include <include/define/constant.h>
 #include <include/object/PCB.h>
+#include <module/system/system.h>
+#include <include/object/VirtualAddress.h>
+
+
+static int pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer);
+
 
 // 创建新的进程
 Process pmu_new_process(Process process,VMModel *vm_model_pointer){
-
+	printf("------------------%s--------------",process.process_name);
 	// 生成一个新的进程链结点
 	ProcessLinkedNode *node_pointer = mmu_alloc_process_linked_node();
-	int process_count = (vm_model_pointer->pcb.process_count)+1; // PCB中的进程个数+1
-	ProcessLinkedNode tempNode = {
-
-		// 进程的相关信息
-		process_id: process_count, // 进程 id 是从 1 开始的，最小的进程 id 就是1
-		process_name: process.process_name,
-		process_extra:"",
-
-		// 进程的虚拟地址
-		virtual_address:{
-
-				virtual_page_number: process_count, //虚页号 : 即为当前的进程个数
-				offset:(process_count%MEMORY_PAGE_SIZE) // 偏移量 : 即为当前的进程个数 Mod MEMORY_PAGE_SIZE
-		},
-
-		// 指向下一个结点的指针
-		next: NULL
-	};*node_pointer = tempNode;
+	int process_count = pmu_assign_to_node_pointer(node_pointer,process,vm_model_pointer);
 
 	// 把这个新建的进程链结点记录到 PCB 中
-	if(vm_model_pointer->pcb.process_count<2){ // 当前新建的进程链结点是第一个结点
+	vm_model_pointer->pcb.process_count = process_count; // process_count赋给PCB中的进程个数
+	if(vm_model_pointer->pcb.process_count<2){ // 当前新建的进程链结点是第 1 个结点
 
 		vm_model_pointer->pcb.head = node_pointer; // 赋给PCB中的头指针
+	} else { // 当前新建的进程链结点是第 2+ 个结点
+
+		vm_model_pointer->pcb.tail->next = node_pointer; // 把新的进程链结点连接到PCB的尾指针指向的下一个结点
 	}
-	vm_model_pointer->pcb.tail->next = node_pointer; // 把新的进程链结点连接到PCB的尾指针指向的下一个结点
 	vm_model_pointer->pcb.tail = node_pointer; // 赋给PCB中的尾指针
 
 
@@ -78,15 +70,18 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 	int i=0;
 	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
 
-	printf("\n\n-----------------START print processes-----------------\n");
-	printf("The total process count is : %d , now print the all process below\n",vm_model_pointer->pcb.process_count);
+	printf("\n\n------------------------------------\n");
+	printf("| The total process count is : %d  |\n",vm_model_pointer->pcb.process_count);
+	printf("------------------------------------\n");
+	printf("|              |   id   |   name   |\n");
 	while(NULL!=p){ // 这样写的好处是防止写成赋值号，而且更突出重点
 
 		++i;
-		printf("%dth process , id: %d , name: %s \n",i,p->process_id, p->process_name);
+		printf("------------------------------------\n");
+		printf("| %dth process |   %d   |   %s     | \n",i,p->process_id, p->process_name);
 		p = p->next;
 	}
-	printf("-----------------END-----------------------------------\n");
+	printf("------------------------------------\n\n");
 	
 }
 
@@ -107,3 +102,27 @@ VMModel* pmu_free(VMModel *vm_model_pointer){
 
 	return vm_model_pointer;
 }
+
+
+
+// 返回进程的个数
+static int pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer){
+
+	int process_count = (vm_model_pointer->pcb.process_count)+1; // PCB中的进程个数+1
+
+	// 进程的相关信息
+	node_pointer->process_id = process_count; // 进程 id 是从 1 开始的，最小的进程 id 就是1
+	node_pointer->process_name = process.process_name;
+	node_pointer->process_extra = "";
+
+	// 进程的虚拟地址
+	node_pointer->virtual_address.virtual_page_number=process_count;//虚页号 : 即为当前的进程个数
+	node_pointer->virtual_address.offset = process_count % MEMORY_PAGE_SIZE; // 偏移量 : 即为当前的进程个数 Mod MEMORY_PAGE_SIZE
+
+
+	// 指向下一个进程链结点的指针
+	node_pointer->next=NULL;
+	printf("------------------%s--------------",process.process_name);
+	return process_count;
+}
+

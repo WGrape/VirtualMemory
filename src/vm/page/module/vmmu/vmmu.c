@@ -4,26 +4,25 @@
 #include <vm/page/module/mmu/mmu.h>
 #include <include/define/constant.h>
 
+static int pmu_assign_to_node_pointer(PageTableItemLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer);
+
 // 注册一个新的进程到页表中
 Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 
 	// 创建一个新的页表项结点
 	PageTableItemLinkedNode *node_pointer = mmu_alloc_page_table_item_linked_node(); // 分配一个页表项结点空间内存
-	int page_table_item_count = (vm_model_pointer->page_table.page_table_item_count)+1; // 页表中的页表项个数+1
-	PageTableItemLinkedNode tempNode = {
+	int page_table_item_count = pmu_assign_to_node_pointer(node_pointer,process,vm_model_pointer);
 
-		virtual_page_number: page_table_item_count, // 虚页号
-		physical_page_number: (page_table_item_count/MEMORY_PAGE_SIZE)+1, // 实页号
-		load:1,
-		next:NULL
-	};*node_pointer = tempNode;
 
 	// 把这个新建的页表项加到页表中
-	if(vm_model_pointer->page_table.page_table_item_count<2){ // 当前的页表项为空
+	vm_model_pointer->page_table.page_table_item_count = page_table_item_count; // page_table_item_count赋给页表中的页表项个数
+	if(vm_model_pointer->page_table.page_table_item_count<2){ // 当前新建的页表项结点是第 1 个结点
 
 		vm_model_pointer->page_table.head = node_pointer; // 赋给页表中的头指针
+	} else { // 当前新建的页表项结点是第 2+ 个结点
+
+		vm_model_pointer->page_table.tail->next = node_pointer; // 把新的页表项结点连接到页表的尾指针指向的下一个结点
 	}
-	vm_model_pointer->page_table.tail->next = node_pointer; // 把新的页表项结点连接到页表的尾指针指向的下一个结点
 	vm_model_pointer->page_table.tail = node_pointer; // 赋给页表中的尾指针
 
 	// 想想还有哪里需要记录 ...
@@ -65,5 +64,22 @@ Process vmmu_unregister_process(Process process,VMModel *vm_model_pointer){
 VMModel* vmmu_free(VMModel *vm_model_pointer){
 
 
+}
+
+
+// 返回页表项的个数
+static int pmu_assign_to_node_pointer(PageTableItemLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer){
+
+	int page_table_item_count = (vm_model_pointer->page_table.page_table_item_count)+1; // 页表中的页表项个数+1
+
+	// 进程的在页表项中的相关信息
+	node_pointer->virtual_page_number = page_table_item_count; // 虚页号
+	node_pointer->physical_page_number = (page_table_item_count/MEMORY_PAGE_SIZE)+1; // 实页号
+	node_pointer->load = 1;
+
+	// 指向下一个页表项结点的指针
+	node_pointer->next=NULL;
+
+	return page_table_item_count;
 }
 

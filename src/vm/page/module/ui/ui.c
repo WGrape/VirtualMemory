@@ -58,3 +58,17 @@ void ui_print_vm_menu_view(){
 	ui_print_wait_for_input();
 }
 
+// 打印出操作成功视图
+void ui_print_operate_success(){
+
+	printf("Operation Successfully !");
+}
+
+// 打印出错误视图
+void ui_print_error_view(char *msg){
+
+	printf(">>>>>>>>>>>>>>>>>>>>> ERROR ! <<<<<<<<<<<<<<<<<<<<<<\n");
+	printf("msg : %s", msg);
+}
+
+
