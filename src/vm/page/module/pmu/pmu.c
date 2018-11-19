@@ -77,7 +77,8 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 
 	int i=0;
 	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
-	
+
+	printf("\n\n-----------------START print processes-----------------\n");
 	printf("The total process count is : %d , now print the all process below\n",vm_model_pointer->pcb.process_count);
 	while(NULL!=p){ // 这样写的好处是防止写成赋值号，而且更突出重点
 
@@ -85,7 +86,7 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 		printf("%dth process , id: %d , name: %s \n",i,p->process_id, p->process_name);
 		p = p->next;
 	}
-	printf("-----------------END-----------------\n");
+	printf("-----------------END-----------------------------------\n");
 	
 }
 

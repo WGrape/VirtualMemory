@@ -15,6 +15,11 @@ static void ui_print_line(){
 	printf("---------------------------------------------------\n");
 }
 
+static void ui_print_wait_for_input(){
+
+	printf("> enter : ");
+}
+
 void ui_print_launch_view(){
 
 	ui_print_logo();
@@ -23,7 +28,7 @@ void ui_print_launch_view(){
 	ui_print_line();
 	printf("| 1(Page) | 2(Segment) | 3(SegmentPage) | 4(Quit) |\n");
 	ui_print_line();
-	printf("> enter : ");
+	ui_print_wait_for_input();
 }
 
 void ui_print_quit_view(){
@@ -39,12 +44,17 @@ void ui_print_quit_view(){
 // 打印出欢迎语
 void ui_print_vm_welcome_view(){
 
-	printf("Page Virtual Memory Init Successfully !");
+	printf("\nPage Virtual Memory Init Successfully !");
 }
 
 // 打印出菜单
 void ui_print_vm_menu_view(){
 
-	printf("Services for you to choose\n1(Print All Proccesses) 2(New Process) 3(Destroy Process) 4(Exit)");
+	printf("\n\n");
+	printf("Services for you to choose\n");
+	ui_print_line();
+	printf("| 1(Print All Proccesses) | 2(New Process) | 3(Destroy Process) | 4(Exit) |\n");
+	ui_print_line();
+	ui_print_wait_for_input();
 }
 
