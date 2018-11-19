@@ -5,7 +5,7 @@
 typedef struct{
 
 	int process_id; // 进程 id
-	char process_name[PROCESS_NAME_LEN]; // 进程 name
+	char *process_name; // 进程 name
 }Process;
 
 

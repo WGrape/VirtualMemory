@@ -5,7 +5,7 @@
 typedef struct{
 
 	int virtual_page_number; // 虚页号
-	int offset； // 偏移量
+	int offset; // 偏移量
 
 }VirtualAddress;
 

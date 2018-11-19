@@ -14,7 +14,7 @@ typedef struct {
 	
 	int load; // 是否已装入内存
 
-	PageTableItemLinkedNode *next; // 指向下一个页表项结点
+	struct PageTableItemLinkedNode *next; // 指向下一个页表项结点
 
 }PageTableItemLinkedNode;
 
