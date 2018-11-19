@@ -36,6 +36,6 @@ int main(){
 		}
 	}
 
-	printf("\nBye\n");
+	ui_print_quit_view();
 	return 0;
 }
