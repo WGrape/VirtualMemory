@@ -82,18 +82,18 @@ void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
 		return;
 	}
 
-	printf("\n\n------------------------------------\n");
+	printf("-----------------------------------------------------------------------\n");
 	printf("| The total item count is : %d\n",vm_model_pointer->page_table.page_table_item_count);
-	printf("------------------------------------\n");
-	printf("|      | virtual_page_number | physical_page_number | load | next  \n");
+	printf("-----------------------------------------------------------------------\n");
+	printf("|           | virtual_page_number | physical_page_number | load | next  \n");
 	while(NULL!=p){ // 这样写的好处是防止写成赋值号，而且更突出重点
 
 		++i;
-		printf("------------------------------------\n");
-		printf("| %dth item |   %d   |  %d  | %d | %p \n",i,p->virtual_page_number, p->physical_page_number,p->load,p->next);
+		printf("-----------------------------------------------------------------------\n");
+		printf("| %dth item  |          %d          |           %d          |  %d  | %p \n",i,p->virtual_page_number, p->physical_page_number,p->load,p->next);
 		p = p->next;
 	}
-	printf("------------------------------------\n\n");
+	printf("-----------------------------------------------------------------------\n");
 
 }
 

@@ -28,10 +28,6 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 		scanf("%d",&option);
 		switch(option){
 
-			// 打印出全部的进程
-			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
-				pmu_print_all_processes(vm_model_pointer);break;
-
 			// 创建一个新的进程
 			case VM_MENU_OPTION_NEW_PROCESSES:
 				command_handle_new_process(vm_model_pointer);break;
@@ -40,6 +36,11 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 			case VM_MENU_OPTION_HALT_PROCESSES:
 				command_handle_halt_process(vm_model_pointer);break;
 
+			// 打印出全部的进程
+			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
+				pmu_print_all_processes(vm_model_pointer);break;
+
+			// 打印出所有的页表项
 			case VM_MENU_OPTION_PRINT_ALL_PAGE_TABLE_ITEMS:
 				pmu_print_all_page_table_items(vm_model_pointer);break;
 
