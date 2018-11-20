@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <include/object/Process.h>
+#include <include/define/constant.h>
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/ui/ui.h>
 #include <module/system/system.h>
@@ -23,7 +24,11 @@ Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 Process mmu_unload_process(Process process,VMModel *vm_model_pointer){
 
 	// 根据进程的id去内存中查找，并移除
-	*((vm_model_pointer->memory.pr)+(process.process_id)-1) = -999999;
+	if(process.process_id>=1 && process.process_id<=MEMORY_UNIT_COUNT){
+
+		// 如果用户输入的进程 id 在管控的内存范围之内 , 直接修改覆盖 , 无论是否存在进程( 因为进程是否存在, 都可以覆盖掉覆盖 )
+		*((vm_model_pointer->memory.pr)+(process.process_id)-1) = -999999;
+	}
 
 	return process;
 }

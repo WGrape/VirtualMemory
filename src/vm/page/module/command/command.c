@@ -56,7 +56,7 @@ static Process command_input_data_of_new_process(){
 	printf("Please enter the name of process: ");
 	scanf("%s",name);
 
-	// 根据 pcb 块中的 count , count+1即为新进程的 id
+	// 记录进程的名称
 	Process process;
 	strcpy(process.process_name , name);
 	return process;
@@ -85,8 +85,9 @@ static Process command_input_data_of_halt_process(){
     int process_id;
     printf("Please enter the id of process: ");
     scanf("%d",&process_id);
-    Process process = {process_id:process_id};
 
+	// 记录进程的 id , 根据 pcb 块中的 count , count+1即为新进程的 id
+    Process process = {process_id:process_id};
     return process;
 }
 
@@ -101,5 +102,7 @@ static void command_handle_halt_process(VMModel *vm_model_pointer){
 					), vm_model_pointer
 			), vm_model_pointer
 	);
+
+	ui_print_operate_success();
 }
 
