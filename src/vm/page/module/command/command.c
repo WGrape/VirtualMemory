@@ -8,6 +8,7 @@
 #include <vm/page/module/vmmu/vmmu.h>
 #include <module/system/system.h>
 #include <include/object/Process.h>
+#include <include/define/rescode.h>
 
 // 声明
 static Process command_input_data_of_new_process();
@@ -98,7 +99,7 @@ static Process command_input_data_of_halt_process(){
 // 命令行处理中止一个进程
 static void command_handle_halt_process(VMModel *vm_model_pointer){
 
-	pmu_halt_process(
+	int res = pmu_halt_process(
 			vmmu_unregister_process(
 					mmu_unload_process(
 
@@ -107,6 +108,9 @@ static void command_handle_halt_process(VMModel *vm_model_pointer){
 			), vm_model_pointer
 	);
 
-	ui_print_operate_success();
+	if(RES_OK == res){
+
+		ui_print_operate_success();
+	}
 }
 

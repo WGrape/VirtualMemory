@@ -5,7 +5,7 @@
 
 extern Process pmu_new_process(Process process, VMModel *vm_model_pointer);
 
-extern Process pmu_halt_process(Process process,VMModel *vm_model_pointer);
+extern int pmu_halt_process(Process process,VMModel *vm_model_pointer);
 
 extern void pmu_print_all_processes(VMModel *vm_model_pointer);
 

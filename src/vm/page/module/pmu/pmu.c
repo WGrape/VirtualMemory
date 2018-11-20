@@ -37,7 +37,7 @@ Process pmu_new_process(Process process , VMModel *vm_model_pointer){
 }
 
 // 中止进程
-Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
+int pmu_halt_process(Process process,VMModel *vm_model_pointer){
 
 	// 移除此进程在 PCB 中的进程链结点数据
 	ProcessLinkedNode *pre = NULL;
@@ -67,12 +67,17 @@ Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
 
 		// PCB中的进程数 -1
 		(vm_model_pointer->pcb.process_count)--;
+
+		// 想想还有哪里需要记录 ...
+
+		return 0;
 	}
 
-
-	// 想想还有哪里需要记录 ...
-
-	return process;
+	// 进程不存在
+	system_console_set_color(2);
+	printf("\nthis process is not exist\n");
+	system_console_set_color(15);
+	return 1;
 }
 
 // 打印所有的进程
@@ -92,18 +97,18 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 
 	// 输出页表
 	system_console_set_color(2);
-	printf("\n\n------------------------------------\n");
+	printf("--------------------------------------------------------------\n");
 	printf("| The total process count is : %d\n",vm_model_pointer->pcb.process_count);
-	printf("------------------------------------\n");
-	printf("|              |  id   |   name  \n");
+	printf("--------------------------------------------------------------\n");
+	printf("|              |  Id   |   Name  | virtual_page_number | offset\n");
 	while(NULL!=p){ // 这样写的好处是防止写成赋值号，而且更突出重点
 
 		++i;
-		printf("------------------------------------\n");
-		printf("| %dth process  |   %d   |   %s     \n",i,p->process_id, p->process_name);
+		printf("--------------------------------------------------------------\n");
+		printf("| %dth process  |   %d   |   %s   |           %d         | %d\n",i,p->process_id, p->process_name,p->virtual_address.virtual_page_number,p->virtual_address.offset);
 		p = p->next;
 	}
-	printf("------------------------------------\n");
+	printf("--------------------------------------------------------------\n");
 	system_console_set_color(15);
 
 

@@ -3,6 +3,7 @@
 
 static void ui_print_logo(){
 
+	system_console_set_color(10);
 	printf("____   ____.__         __               .__       _____                                       ._.\n"
 		   "\\   \\ /   /|__|_______/  |_ __ _______  |  |     /     \\   ____   _____   ___________ ___.__. | |\n"
 		   " \\   Y   / |  \\_  __ \\   __\\  |  \\__  \\ |  |    /  \\ /  \\_/ __ \\ /     \\ /  _ \\_  __ <   |  | | |\n"
@@ -10,6 +11,7 @@ static void ui_print_logo(){
 		   "   \\___/   |__||__|   |__| |____/(____  /____/ \\____|__  /\\___  >__|_|  /\\____/|__|   / ____|  __\n"
 		   "                                      \\/               \\/     \\/      \\/              \\/       \\/");
 	printf("\n");
+	system_console_set_color(15);
 }
 
 static void ui_print_wait_for_input(){
@@ -48,7 +50,7 @@ void ui_print_vm_welcome_view(){
 // 打印出菜单
 void ui_print_vm_menu_view(){
 
-	printf("Services for you to choose\n");
+	printf("\nServices for you to choose\n");
 	printf("----------------------------------\n");
 	printf("| 1 | New Process                |\n");
 	printf("| 2 | Halt Process               |\n");
