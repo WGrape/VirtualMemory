@@ -75,7 +75,7 @@ int pmu_halt_process(Process process,VMModel *vm_model_pointer){
 
 	// 进程不存在
 	system_console_set_color(2);
-	printf("\nthis process is not exist\n");
+	printf("Sorry, this process is not exist.\n");
 	system_console_set_color(15);
 	return 1;
 }
@@ -90,7 +90,7 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 
 		// 输出提示信息 : 没有任何进程
 		system_console_set_color(2);
-		printf("Sorry, there is no any processes.");
+		printf("Sorry, there is no any processes.\n");
 		system_console_set_color(15);
 		return;
 	}

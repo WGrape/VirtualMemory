@@ -82,7 +82,7 @@ void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
 
 		// 输出提示信息 : 没有任何页表项
 		system_console_set_color(2);
-		printf("Sorry, there is no any items.");
+		printf("Sorry, there is no any items.\n");
 		system_console_set_color(15);
 		return;
 	}

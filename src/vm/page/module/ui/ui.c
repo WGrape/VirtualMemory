@@ -31,12 +31,14 @@ void ui_print_launch_view(){
 
 void ui_print_quit_view(){
 
+	system_console_set_color(10);
 	printf("__________                ._.\n"
 		   "\\______   \\___.__. ____   | |\n"
 		   " |    |  _<   |  |/ __ \\  | |\n"
 		   " |    |   \\\\___  \\  ___/   \\|\n"
 		   " |______  // ____|\\___  >  __\n"
 		   "        \\/ \\/         \\/   \\/");
+	system_console_set_color(15);
 }
 
 // 打印出欢迎语
