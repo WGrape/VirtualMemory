@@ -1,10 +1,12 @@
-#ifndef INCLUDE_OBJECT_PAGE_VM_COMMAND_PACKAGE_H
-#define INCLUDE_OBJECT_PAGE_VM_COMMAND_PACKAGE_H
+#ifndef VM_PAGE_INCLUDE_OBJECT_VM_Model_H
+#define VM_PAGE_INCLUDE_OBJECT_VM_Model_H
 
+#include <include/object/Memory.h>
+#include <include/object/PCB.h>
+#include "PageTable.h"
 
+// 虚拟存储器Model[主要是把一些 Memory,PCB,PageTable 结合到一起,打包传递给相关单元使用]
 typedef struct{
-
-	int vm_type; // 当前的 虚拟存储器 类型
 
 	Memory memory; // 当前的内存
 	
@@ -12,7 +14,7 @@ typedef struct{
 	
 	PageTable page_table; // 页表
 
-}PageVMCommandPackage;
+}VMModel;
 
 
 #endif

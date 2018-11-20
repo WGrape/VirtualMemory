@@ -3,6 +3,7 @@
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/ui/ui.h>
 #include <include/define/constant.h>
+#include <vm/page/include/define/constant.h>
 #include <vm/page/module/pmu/pmu.h>
 #include <vm/page/module/mmu/mmu.h>
 #include <vm/page/module/vmmu/vmmu.h>
@@ -43,7 +44,7 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 
 			// 打印出所有的页表项
 			case VM_MENU_OPTION_PRINT_ALL_PAGE_TABLE_ITEMS:
-				pmu_print_all_page_table_items(vm_model_pointer);break;
+				vmmu_print_all_page_table_items(vm_model_pointer);break;
 
 			// 退出
 			default:

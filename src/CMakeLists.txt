@@ -11,20 +11,23 @@ set(INCLUDE_DIR ./include)
 set(VM_DIR ./vm)
 add_executable(main ./main.c
 
+        module/system/system.c module/system/system.h include/define/color.h
+
         ${INCLUDE_DIR}/define/constant.h
         ${INCLUDE_DIR}/define/rescode.h
 
         ${INCLUDE_DIR}/object/Memory.h
         ${INCLUDE_DIR}/object/PCB.h
-        ${INCLUDE_DIR}/object/PhysicalAddress.h
         ${INCLUDE_DIR}/object/Process.h
-        ${INCLUDE_DIR}/object/ProcessLinkedNode.h
-        ${INCLUDE_DIR}/object/VirtualAddress.h
 
+        # 页式
         ${VM_DIR}/page/include/define/constant.h
         ${VM_DIR}/page/include/object/PageTable.h
         ${VM_DIR}/page/include/object/PageTableItemLinkedNode.h
+        ${VM_DIR}/page/include/object/ProcessLinkedNode.h
+        ${VM_DIR}/page/include/object/VirtualAddress.h
         ${VM_DIR}/page/include/object/VMModel.h
+
 
         ${VM_DIR}/page/module/command/command.c
         ${VM_DIR}/page/module/command/command.h
@@ -40,5 +43,32 @@ add_executable(main ./main.c
         ${VM_DIR}/page/module/vmmu/vmmu.h
 
 
-        module/system/system.c module/system/system.h include/define/color.h)
+        # 段式
+        ${VM_DIR}/segment/include/define/constant.h
+        ${VM_DIR}/segment/include/object/SegmentTable.h
+        ${VM_DIR}/segment/include/object/SegmentTableItemLinkedNode.h
+        ${VM_DIR}/segment/include/object/ProcessLinkedNode.h
+        ${VM_DIR}/segment/include/object/VirtualAddress.h
+        ${VM_DIR}/segment/include/object/VMModel.h
+
+        ${VM_DIR}/segment/module/command/command.c
+        ${VM_DIR}/segment/module/command/command.h
+        ${VM_DIR}/segment/module/init/init.c
+        ${VM_DIR}/segment/module/init/init.h
+        ${VM_DIR}/segment/module/mmu/mmu.c
+        ${VM_DIR}/segment/module/mmu/mmu.h
+        ${VM_DIR}/segment/module/pmu/pmu.c
+        ${VM_DIR}/segment/module/pmu/pmu.h
+        ${VM_DIR}/segment/module/ui/ui.c
+        ${VM_DIR}/segment/module/ui/ui.h
+        ${VM_DIR}/segment/module/vmmu/vmmu.c
+        ${VM_DIR}/segment/module/vmmu/vmmu.h
+
+
+
+
+
+
+        )
+
 

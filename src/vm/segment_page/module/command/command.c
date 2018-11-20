@@ -1,133 +1,116 @@
 #include<stdio.h>
+#include <string.h>
+#include <vm/page/include/object/VMModel.h>
+#include <vm/page/module/ui/ui.h>
+#include <include/define/constant.h>
+#include <vm/page/module/pmu/pmu.h>
+#include <vm/page/module/mmu/mmu.h>
+#include <vm/page/module/vmmu/vmmu.h>
+#include <module/system/system.h>
+#include <include/object/Process.h>
+#include <include/define/rescode.h>
+
+// 声明
+static Process command_input_data_of_new_process();
+static Process command_input_data_of_halt_process();
+static void command_handle_new_process(VMModel *vm_model_pointer);
+static void command_handle_halt_process(VMModel *vm_model_pointer);
 
 
-static PageVMCommandPackage page_vm_command_package;
-static SegmentPageVMCommandPackage segment_page_vm_command_package;
-static SegmentVMCommandPackage segment_vm_commandPackage;
-
-
-int command_enter_interactive_env(int vm_type){
-
+// 入口
+void command_enter_interactive_env(VMModel *vm_model_pointer){
 	
 	int option; // 菜单选项的选择
 
-	command_construct(); // 初始化
+	for(;;){ // 外层是while(1)大循环
 
-	while(1){
-
-		ui_print_vm_menu();
+		// 打印菜单并选择选项
+		ui_print_vm_menu_view();
 		scanf("%d",&option);
 		switch(option){
 
-			case VM_MENU_OPTION_PRINT_ALL_PROCESSES: // 打印出所有的 process
-			case VM_MENU_OPTION_NEW_PROCESSES: // 新建 process
-			case VM_MENU_OPTION_HALT_PROCESSES: // 中止一个进程
-				
-				command_handle_vm_type_combine_option(vm_type,option);
-				break;
+			// 创建一个新的进程
+			case VM_MENU_OPTION_NEW_PROCESSES:
+				command_handle_new_process(vm_model_pointer);break;
+
+			// 中止一个进程
+			case VM_MENU_OPTION_HALT_PROCESSES:
+				command_handle_halt_process(vm_model_pointer);break;
+
+			// 打印出全部的进程
+			case VM_MENU_OPTION_PRINT_ALL_PROCESSES:
+				pmu_print_all_processes(vm_model_pointer);break;
+
+			// 打印出所有的页表项
+			case VM_MENU_OPTION_PRINT_ALL_PAGE_TABLE_ITEMS:
+				pmu_print_all_page_table_items(vm_model_pointer);break;
 
 			// 退出
 			default:
-				command_destruct();
-				return(); 
-				break;
+				return;
 		}
 	}
-
 }
 
-
-// 初始化
-static void command_construct(){
-
-	if(vm_type==VM_TYPE_PAGE){
-
-		page_vm_command_package = page_vm_get_command_package();
-	}else if(vm_type==VM_TYPE_SEGMENT){
-
-		segment_page_vm_command_package = segment_vm_get_command_package();
-	}else{
-
-		segment_vm_commandPackage = segment_page_vm_get_command_package();
-	}
-}
-
-// 析构
-static void command_destruct(){
-
-	page_vm_command_package = {};
-	segment_page_vm_command_package = {};
-	segment_vm_commandPackage ={};
-}
-
-
-// 命令行处理选项
-static void command_handle_vm_type_combine_option(int vm_type,int option){
-
-	if(vm_type==VM_TYPE_PAGE){
-
-		command_handle_page_vm_option(option);
-
-	}else if(vm_type==VM_TYPE_SEGMENT){
-
-		command_handle_segment_vm_option(option);
-	}else{
-
-		command_handle_segment_page_vm_option(option);
-	}
-}
-
-// 命令行处理页式虚拟存储器的选项
-static void command_handle_page_vm_option(int option){
-
-	if(VM_MENU_OPTION_PRINT_ALL_PROCESSES==option){
-
-		// 打印出全部的进程
-		pmu_print_all_processes(page_vm_command_package.pcb.head);
-	}else if(VM_MENU_OPTION_NEW_PROCESSES==option){
-
-		// 创建一个新的进程
-		mmu_load_process(vmmu_register_process(pmu_new_process( command_input_data_of_new_process(page_vm_command_package) )));
-	}else{
-
-		mmu_unload_process(vmmu_unregister_process(pmu_halt_process( command_input_data_of_halt_process(page_vm_command_package) )));
-	}
-}
-
-// 命令行处理段式虚拟存储器的选项
-static void command_handle_segment_vm_option(int option){
-
-}
-
-// 命令行处理段页式虚拟存储器的选项
-static void command_handle_segment_page_vm_option(int option){
-
-}
 
 
 // 命令行输入新建进程的信息
-Process command_input_data_of_new_process(Process process){
+static Process command_input_data_of_new_process(){
 
-	char name[PROCESS_NAME_LEN];
+	char name[PROCESS_LIMIT_NAME_MAX_LEN];
 	printf("Please enter the name of process: ");
-	scanf("%s",&name);
+	scanf("%s",name);
 
-	// 根据 pcb 块中的 count , count+1即为新进程的 id
-	Process process = {process_name:name};
-
+	// 记录进程的名称
+	Process process;
+	strcpy(process.process_name , name);
 	return process;
 }
+
+// 命令行处理新建一个进程
+static void command_handle_new_process(VMModel *vm_model_pointer){
+
+	mmu_load_process(
+			vmmu_register_process(
+					pmu_new_process(
+
+							command_input_data_of_new_process(), vm_model_pointer
+					), vm_model_pointer
+			), vm_model_pointer
+	);
+
+	ui_print_operate_success();
+}
+
 
 
 // 命令行输入中止进程的信息
-Process command_input_data_of_halt_process(){
+static Process command_input_data_of_halt_process(){
 
-	int process_id;
-	printf("Please enter the id of process: ");
-	scanf("%d",&process_id);
+    int process_id;
+    printf("Please enter the id of process: ");
+    scanf("%d",&process_id);
 
-	// 根据 pcb 块中的 count , count+1即为新进程的 id
-	Process process = {process_id:process_id};
-
-	return process;
+	// 记录进程的 id , 根据 pcb 块中的 count , count+1即为新进程的 id
+    Process process = {process_id:process_id};
+    return process;
 }
+
+// 命令行处理中止一个进程
+static void command_handle_halt_process(VMModel *vm_model_pointer){
+
+	int res = pmu_halt_process(
+			vmmu_unregister_process(
+					mmu_unload_process(
+
+							command_input_data_of_halt_process(), vm_model_pointer
+					), vm_model_pointer
+			), vm_model_pointer
+	);
+
+	if(RES_OK == res){
+
+		ui_print_operate_success();
+	}
+}
+

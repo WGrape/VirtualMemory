@@ -26,17 +26,5 @@ typedef enum{
 // #define VM_TYPE_SEGMENT 2; // 虚拟存储器类型 : 段式虚拟存储器
 // #define VM_TYPE_SEGMENT_PAGE 3; // 虚拟存储器类型 : 段页式虚拟存储器
 
-typedef enum{
-
-    VM_MENU_OPTION_NEW_PROCESSES = 1,
-    VM_MENU_OPTION_HALT_PROCESSES,
-    VM_MENU_OPTION_PRINT_ALL_PROCESSES,
-    VM_MENU_OPTION_PRINT_ALL_PAGE_TABLE_ITEMS
-}VM_MENU_OPTION;
-
-// #define VM_MENU_OPTION_PRINT_ALL_PROCESSES 1; // 虚拟储存器菜单-打印出所有的进程
-// #define VM_MENU_OPTION_NEW_PROCESSES 2; // 虚拟储存器菜单-创建进程
-// #define VM_MENU_OPTION_HALT_PROCESSES 3; // 虚拟储存器菜单-中止进程
-
 
 #endif

@@ -1,7 +1,7 @@
-#ifndef PAGE_MODULE_INIT_H
-#define PAGE_MODULE_INIT_H
+#ifndef VM_SEGMENT_MODULE_INIT_H
+#define VM_SEGMENT_MODULE_INIT_H
 
-extern void page_virtual_memory_init();
+extern void segment_vm_init();
 
 
 #endif

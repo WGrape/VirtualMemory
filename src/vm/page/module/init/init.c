@@ -48,10 +48,11 @@ static void page_vm_construct(){
 // 析构
 static void page_vm_destruct(){
 
-	vmmu_free(
-
-			pmu_free(__vm_model_pointer__) // 进程管理单元释放掉所占内存
-	); // 虚拟存储器管理单元释放掉所占内存
+	mmu_free(
+			vmmu_free(
+					pmu_free(__vm_model_pointer__) // 进程管理单元释放掉所占内存
+			) // 虚拟存储器管理单元释放掉所占内存
+	);// 物理内存释放掉
 
 	// 销毁
 	VMModel vm_model = {

@@ -5,14 +5,14 @@
 #include <vm/page/module/mmu/mmu.h>
 #include <include/define/constant.h>
 
-static int pmu_assign_to_node_pointer(PageTableItemLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer);
+static int vmmu_assign_to_node_pointer(PageTableItemLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer);
 
 // 注册一个新的进程到页表中
 Process vmmu_register_process(Process process,VMModel *vm_model_pointer){
 
 	// 创建一个新的页表项结点
 	PageTableItemLinkedNode *node_pointer = mmu_alloc_page_table_item_linked_node(); // 分配一个页表项结点空间内存
-	int page_table_item_count = pmu_assign_to_node_pointer(node_pointer,process,vm_model_pointer);
+	int page_table_item_count = vmmu_assign_to_node_pointer(node_pointer,process,vm_model_pointer);
 
 
 	// 把这个新建的页表项加到页表中
@@ -58,7 +58,7 @@ Process vmmu_unregister_process(Process process,VMModel *vm_model_pointer){
 		}
 
 		// 释放掉所占内存
-		mmu_collec_process_linked_node(p);
+		mmu_collec_page_table_item_linked_node(p);
 
 		// PCB中的进程数 -1
 		(vm_model_pointer->pcb.process_count)--;
@@ -72,7 +72,7 @@ Process vmmu_unregister_process(Process process,VMModel *vm_model_pointer){
 
 
 // 打印所有的页表项
-void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
+void vmmu_print_all_page_table_items(VMModel *vm_model_pointer){
 
 	int i=0;
 	PageTableItemLinkedNode *p = vm_model_pointer->page_table.head;
@@ -110,12 +110,24 @@ void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
 // 虚拟存储器管理单元释放内存
 VMModel* vmmu_free(VMModel *vm_model_pointer){
 
+	// 释放掉全部的 PageTableItemLinkedNode 结点
+	PageTableItemLinkedNode *p = vm_model_pointer->page_table.head;
+	PageTableItemLinkedNode *q = NULL;
+	while(NULL != p){
 
+		q = p->next;
+		mmu_collec_page_table_item_linked_node(p);
+		p = q;
+	}
+
+	// 想想还需要清理什么 ...
+
+	return vm_model_pointer;
 }
 
 
 // 返回页表项的个数
-static int pmu_assign_to_node_pointer(PageTableItemLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer){
+static int vmmu_assign_to_node_pointer(PageTableItemLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer){
 
 	int page_table_item_count = (vm_model_pointer->page_table.page_table_item_count)+1; // 页表中的页表项个数+1
 

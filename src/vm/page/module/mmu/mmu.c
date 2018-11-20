@@ -7,6 +7,10 @@
 #include <vm/page/module/ui/ui.h>
 #include <module/system/system.h>
 
+
+void mmu_collec_memory(int *p);
+
+
 // 载入一个进程到内存中
 Process mmu_load_process(Process process,VMModel *vm_model_pointer){
 
@@ -32,6 +36,13 @@ Process mmu_unload_process(Process process,VMModel *vm_model_pointer){
 
 	return process;
 }
+
+// mmu释放掉内存
+VMModel* mmu_free(VMModel *vm_model_pointer){
+
+	mmu_collec_memory(vm_model_pointer->memory.pr);
+}
+
 
 
 

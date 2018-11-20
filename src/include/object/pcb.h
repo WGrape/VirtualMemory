@@ -1,7 +1,7 @@
 #ifndef INCLUDE_OBJECT_PCB_H
 #define INCLUDE_OBJECT_PCB_H
 
-#include "ProcessLinkedNode.h"
+#include "vm/page/include/object/ProcessLinkedNode.h"
 
 // 进程控制块
 typedef struct{

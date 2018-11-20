@@ -6,7 +6,7 @@
 #include <include/define/constant.h>
 #include <include/object/PCB.h>
 #include <module/system/system.h>
-#include <include/object/VirtualAddress.h>
+#include <vm/page/include/object/VirtualAddress.h>
 #include <include/define/color.h>
 
 

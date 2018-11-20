@@ -3,6 +3,7 @@
 #include <vm/page/module/ui/ui.h>
 #include <include/define/constant.h>
 #include <vm/page/module/init/init.h>
+#include <vm/segment/module/init/init.h>
 
 int main(){
 
@@ -20,12 +21,11 @@ int main(){
 
 			// 页式虚拟存储器
 			case VM_TYPE_PAGE:
-			page_vm_init();
-			break;
+			page_vm_init();break;
 
 			// 段式虚拟存储器
 			case VM_TYPE_SEGMENT:
-			// segment_vm_init();break;
+			segment_vm_init();break;
 
 			// 段页式虚拟存储器
 			case VM_TYPE_SEGMENT_PAGE:

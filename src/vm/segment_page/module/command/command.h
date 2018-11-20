@@ -1,7 +1,7 @@
-#ifndef MODULE_COMMAND_H
-#define MODULE_COMMAND_H
+#ifndef VM_PAGE_MODULE_COMMAND_H
+#define VM_PAGE_MODULE_COMMAND_H
 
-extern int command_enter_interactive_env();
+extern void command_enter_interactive_env(VMModel *vm_model_pointer);
 
 
 #endif
