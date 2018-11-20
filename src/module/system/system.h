@@ -5,5 +5,7 @@ void system_exit(char *msg);
 
 void system_debug();
 
+void system_console_set_color(unsigned short color_index);
+
 #endif
 

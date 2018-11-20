@@ -1,5 +1,6 @@
-
+#include <stdlib.h>
 #include <include/object/Process.h>
+#include <module/system/system.h>
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/mmu/mmu.h>
 #include <include/define/constant.h>
@@ -76,12 +77,18 @@ void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
 	int i=0;
 	PageTableItemLinkedNode *p = vm_model_pointer->page_table.head;
 
+
 	if(vm_model_pointer->page_table.page_table_item_count<1){
 
+		// 输出提示信息 : 没有任何页表项
+		system_console_set_color(2);
 		printf("Sorry, there is no any items.");
+		system_console_set_color(15);
 		return;
 	}
 
+	// 输出页表
+	system_console_set_color(2);
 	printf("-----------------------------------------------------------------------\n");
 	printf("| The total item count is : %d\n",vm_model_pointer->page_table.page_table_item_count);
 	printf("-----------------------------------------------------------------------\n");
@@ -90,10 +97,12 @@ void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
 
 		++i;
 		printf("-----------------------------------------------------------------------\n");
-		printf("| %dth item  |          %d          |           %d          |  %d  | %p \n",i,p->virtual_page_number, p->physical_page_number,p->load,p->next);
+		printf("| %dth item  |          %d          |           %d          |  %d   | %p \n",i,p->virtual_page_number, p->physical_page_number,p->load,p->next);
 		p = p->next;
 	}
 	printf("-----------------------------------------------------------------------\n");
+	system_console_set_color(15);
+
 
 }
 

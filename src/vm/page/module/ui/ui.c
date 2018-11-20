@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <module/system/system.h>
 
 static void ui_print_logo(){
 
@@ -8,11 +9,7 @@ static void ui_print_logo(){
 		   "  \\     /  |  ||  | \\/|  | |  |  // __ \\|  |__ /    Y    \\  ___/|  Y Y  (  <_> )  | \\/\\___  |  \\|\n"
 		   "   \\___/   |__||__|   |__| |____/(____  /____/ \\____|__  /\\___  >__|_|  /\\____/|__|   / ____|  __\n"
 		   "                                      \\/               \\/     \\/      \\/              \\/       \\/");
-}
-
-static void ui_print_line(){
-
-	printf("---------------------------------------------------\n");
+	printf("\n");
 }
 
 static void ui_print_wait_for_input(){
@@ -23,11 +20,10 @@ static void ui_print_wait_for_input(){
 void ui_print_launch_view(){
 
 	ui_print_logo();
-	printf("\n\n");
 	printf("Choose the different types of virtual memory\n");
-	ui_print_line();
+	printf("---------------------------------------------------\n");
 	printf("| 1(Page) | 2(Segment) | 3(SegmentPage) | 4(Quit) |\n");
-	ui_print_line();
+	printf("---------------------------------------------------\n");
 	ui_print_wait_for_input();
 }
 
@@ -44,13 +40,14 @@ void ui_print_quit_view(){
 // 打印出欢迎语
 void ui_print_vm_welcome_view(){
 
-	printf("\nPage Virtual Memory Init Successfully !");
+	system_console_set_color(2);
+	printf("Page Virtual Memory Init Successfully !\n");
+	system_console_set_color(15);
 }
 
 // 打印出菜单
 void ui_print_vm_menu_view(){
 
-	printf("\n\n");
 	printf("Services for you to choose\n");
 	printf("----------------------------------\n");
 	printf("| 1 | New Process                |\n");
@@ -65,14 +62,18 @@ void ui_print_vm_menu_view(){
 // 打印出操作成功视图
 void ui_print_operate_success(){
 
-	printf("\nOperation Successfully !");
+	system_console_set_color(2);
+	printf("Operation Successfully !\n");
+	system_console_set_color(15);
 }
 
 // 打印出错误视图
 void ui_print_error_view(char *msg){
 
+	system_console_set_color(2);
 	printf(">>>>>>>>>>>>>>>>>>>>> ERROR ! <<<<<<<<<<<<<<<<<<<<<<\n");
-	printf("msg : %s", msg);
+	printf("msg : %s\n", msg);
+	system_console_set_color(12);
 }
 
 

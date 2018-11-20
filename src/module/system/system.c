@@ -2,6 +2,7 @@
 #include <vm/page/module/ui/ui.h>
 #include <stdlib.h>
 #include <string.h>
+#include <afxres.h>
 
 void system_exit(char *msg){
 
@@ -17,4 +18,10 @@ void system_exit(char *msg){
 void system_debug(){
 
     printf("-----------debug-----------");
+}
+
+
+void system_console_set_color(unsigned short color_index){
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color_index);
 }

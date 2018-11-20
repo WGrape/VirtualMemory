@@ -83,10 +83,15 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 
 	if(vm_model_pointer->pcb.process_count<1){
 
+		// 输出提示信息 : 没有任何进程
+		system_console_set_color(2);
 		printf("Sorry, there is no any processes.");
+		system_console_set_color(15);
 		return;
 	}
 
+	// 输出页表
+	system_console_set_color(2);
 	printf("\n\n------------------------------------\n");
 	printf("| The total process count is : %d\n",vm_model_pointer->pcb.process_count);
 	printf("------------------------------------\n");
@@ -98,8 +103,10 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 		printf("| %dth process  |   %d   |   %s     \n",i,p->process_id, p->process_name);
 		p = p->next;
 	}
-	printf("------------------------------------\n\n");
-	
+	printf("------------------------------------\n");
+	system_console_set_color(15);
+
+
 }
 
 // 进程管理单元释放内存
