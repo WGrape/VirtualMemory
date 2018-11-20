@@ -18,7 +18,7 @@ typedef struct ProcessLinkedNode{
 	// PhysicalAddress *physical_address; 	 // 进的实地址 = 实页号+页内地址
 
 	// 必须这样写 typedef struct ProcessLinkedNode
-	struct ProcessLinkedNode *next; // 指向下一个进程链结点
+	struct SegmentProcessLinkedNode *next; // 指向下一个进程链结点
 
 }ProcessLinkedNode;
 

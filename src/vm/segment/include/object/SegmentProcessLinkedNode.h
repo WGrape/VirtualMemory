@@ -1,7 +1,7 @@
 #ifndef VM_SEGMENT_INCLUDE_OBJECT_PROCESS_LINKED_NODE_H
 #define VM_SEGMENT_INCLUDE_OBJECT_PROCESS_LINKED_NODE_H
 
-#include "VirtualAddress.h"
+#include "SegmentVirtualAddress.h"
 #include <include/define/constant.h>
 
 

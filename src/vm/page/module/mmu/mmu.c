@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <include/object/Process.h>
+#include <vm/page/include/object/ProcessLinkedNode.h>
 #include <include/define/constant.h>
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/ui/ui.h>

@@ -14,7 +14,7 @@ typedef struct{
 	
 	SegmentTable segment_table; // 段表
 
-}VMModel;
+}SegmentVMModel;
 
 
 #endif

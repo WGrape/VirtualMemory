@@ -29,6 +29,7 @@ int main(){
 
 			// 段页式虚拟存储器
 			case VM_TYPE_SEGMENT_PAGE:
+			ui_print_vm_menu_view();
 			// segment_page_vm_init();break;
 
 			// 退出
