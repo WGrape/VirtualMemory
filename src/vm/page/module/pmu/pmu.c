@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <include/object/Process.h>
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/mmu/mmu.h>
@@ -6,14 +7,14 @@
 #include <include/object/PCB.h>
 #include <module/system/system.h>
 #include <include/object/VirtualAddress.h>
+#include <include/define/color.h>
 
 
 static int pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer);
 
-
 // 创建新的进程
-Process pmu_new_process(Process process,VMModel *vm_model_pointer){
-	printf("------------------%s--------------",process.process_name);
+Process pmu_new_process(Process process , VMModel *vm_model_pointer){
+
 	// 生成一个新的进程链结点
 	ProcessLinkedNode *node_pointer = mmu_alloc_process_linked_node();
 	int process_count = pmu_assign_to_node_pointer(node_pointer,process,vm_model_pointer);
@@ -112,8 +113,8 @@ static int pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process p
 
 	// 进程的相关信息
 	node_pointer->process_id = process_count; // 进程 id 是从 1 开始的，最小的进程 id 就是1
-	node_pointer->process_name = process.process_name;
-	node_pointer->process_extra = "";
+	strcpy(node_pointer->process_name,process.process_name);
+	strcpy(node_pointer->process_extra,"");
 
 	// 进程的虚拟地址
 	node_pointer->virtual_address.virtual_page_number=process_count;//虚页号 : 即为当前的进程个数
@@ -122,7 +123,7 @@ static int pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process p
 
 	// 指向下一个进程链结点的指针
 	node_pointer->next=NULL;
-	printf("------------------%s--------------",process.process_name);
+
 	return process_count;
 }
 

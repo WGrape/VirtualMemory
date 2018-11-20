@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <string.h>
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/ui/ui.h>
 #include <include/define/constant.h>
@@ -9,7 +10,6 @@
 #include <include/object/Process.h>
 
 // 声明
-static Process __process__;
 static Process command_input_data_of_new_process();
 static Process command_input_data_of_halt_process();
 static void command_handle_new_process(VMModel *vm_model_pointer);
@@ -48,6 +48,7 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 }
 
 
+
 // 命令行输入新建进程的信息
 static Process command_input_data_of_new_process(){
 
@@ -56,23 +57,8 @@ static Process command_input_data_of_new_process(){
 	scanf("%s",name);
 
 	// 根据 pcb 块中的 count , count+1即为新进程的 id
-	Process process = {
-
-		process_name:name
-	};
-	__process__ = process;
-	return __process__;
-}
-
-
-// 命令行输入中止进程的信息
-static Process command_input_data_of_halt_process(){
-
-	int process_id;
-	printf("Please enter the id of process: ");
-	scanf("%d",&process_id);
-	Process process = {process_id:process_id};
-
+	Process process;
+	strcpy(process.process_name , name);
 	return process;
 }
 
@@ -89,6 +75,19 @@ static void command_handle_new_process(VMModel *vm_model_pointer){
 	);
 
 	ui_print_operate_success();
+}
+
+
+
+// 命令行输入中止进程的信息
+static Process command_input_data_of_halt_process(){
+
+    int process_id;
+    printf("Please enter the id of process: ");
+    scanf("%d",&process_id);
+    Process process = {process_id:process_id};
+
+    return process;
 }
 
 // 命令行处理中止一个进程
