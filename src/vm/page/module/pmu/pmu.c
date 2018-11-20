@@ -47,14 +47,18 @@ Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
 		pre = p;
 		p = p->next;
 	}
-	if(p!=vm_model_pointer->pcb.head){
+	if(NULL == pre){ // 如果当前只有1个进程
+
+		vm_model_pointer->pcb.head=NULL;
+		vm_model_pointer->pcb.tail=NULL;
+
+	} else {
 
 		// 上一个结点连向即将移除的结点的下一个结点
 		pre->next=p->next;
-
-		// 释放掉所占内存
-		mmu_collec_process_linked_node(p);
 	}
+	// 释放掉所占内存
+	mmu_collec_process_linked_node(p);
 
 	// PCB中的进程数 -1
 	(vm_model_pointer->pcb.process_count)--;
@@ -70,6 +74,12 @@ void pmu_print_all_processes(VMModel *vm_model_pointer){
 
 	int i=0;
 	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
+
+	if(vm_model_pointer->pcb.process_count<1){
+
+		printf("Sorry, there is no any processes.");
+		return;
+	}
 
 	printf("\n\n------------------------------------\n");
 	printf("| The total process count is : %d\n",vm_model_pointer->pcb.process_count);

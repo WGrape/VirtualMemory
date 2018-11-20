@@ -1,7 +1,7 @@
 #ifndef INCLUDE_DEFINE_CONSTANT_H
 #define INCLUDE_DEFINE_CONSTANT_H
 
-const int MEMORY_UNIT_COUNT = 1000; // 内存单元个数(每个单元是 int,只存放一个进程的 id) , 也是进程的最大个数
+#define MEMORY_UNIT_COUNT 1000 // 内存单元个数(每个单元是 int,只存放一个进程的 id) , 也是进程的最大个数
 #define MEMORY_PAGE_SIZE 10 // 每一页有10个
 #define MEMORY_PAGE_COUNT 100 // 一共有100页
 
