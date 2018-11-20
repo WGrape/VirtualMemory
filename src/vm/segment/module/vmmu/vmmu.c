@@ -100,8 +100,8 @@ void segment_vmmu_print_all_segment_table_items(SegmentVMModel *vm_model_pointer
 
         ++i;
         printf("-----------------------------------------------------------------------\n");
-        printf("| %dth item  |        %d        |         %p        |  %d  |  %d   | %p\n", i, p->segment_number,
-               p->segment_length, p->segment_length, p->load, p->next);
+        printf("| %dth item  |        %d        |     %p    |      %d      |  %d   | %p\n", i, p->segment_number,
+               p->segment_address, p->segment_length, p->load, p->next);
         p = p->next;
     }
     printf("-----------------------------------------------------------------------\n");
@@ -126,7 +126,7 @@ segment_vmmu_assign_to_node_pointer(SegmentTableItemLinkedNode *node_pointer, Pr
 
     // 进程的在段表项中的相关信息
     node_pointer->segment_number = segment_table_item_count; // 段号
-    node_pointer->segment_address = segment_table_item_count;
+    node_pointer->segment_address = (vm_model_pointer->memory.pr)+(segment_table_item_count-1);
     node_pointer->segment_length = 4;
     node_pointer->load = 1;
 
