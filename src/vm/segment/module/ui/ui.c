@@ -45,7 +45,7 @@ void segment_ui_print_quit_view(){
 void segment_ui_print_vm_welcome_view(){
 
 	system_console_set_color(2);
-	printf("Page Virtual Memory Init Successfully !\n");
+	printf("Segment Virtual Memory Init Successfully !\n");
 	system_console_set_color(15);
 }
 

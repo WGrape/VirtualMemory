@@ -4,7 +4,7 @@
 #include <vm/page/include/object/VMModel.h>
 #include <vm/page/module/mmu/mmu.h>
 #include <include/define/constant.h>
-#include <include/object/PCB.h>
+#include <vm/page/include/object/PCB.h>
 #include <module/system/system.h>
 #include <vm/page/include/object/VirtualAddress.h>
 #include <include/define/color.h>

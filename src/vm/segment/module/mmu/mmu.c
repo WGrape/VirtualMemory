@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <include/object/Process.h>
 #include <include/define/constant.h>
-#include <vm/page/include/object/VMModel.h>
-#include <vm/page/module/ui/ui.h>
+#include <vm/segment/include/object/SegmentVMModel.h>
+#include <vm/segment/include/object/SegmentProcessLinkedNode.h>
+#include <vm/segment/module/ui/ui.h>
 #include <module/system/system.h>
 #include <vm/segment/include/object/SegmentTableItemLinkedNode.h>
 
@@ -13,7 +14,7 @@ void segment_mmu_collec_memory(int *p);
 
 
 // 载入一个进程到内存中
-Process segment_mmu_load_process(Process process,VMModel *vm_model_pointer){
+Process segment_mmu_load_process(Process process,SegmentVMModel *vm_model_pointer){
 
 	// 进程载入内存中
 	// int process_count = vm_model_pointer->pcb.process_count; // 获取PCB中当前的进程个数
@@ -26,7 +27,7 @@ Process segment_mmu_load_process(Process process,VMModel *vm_model_pointer){
 }
 
 // 从内存中移除一个进程
-Process segment_mmu_unload_process(Process process,VMModel *vm_model_pointer){
+Process segment_mmu_unload_process(Process process,SegmentVMModel *vm_model_pointer){
 
 	// 根据进程的id去内存中查找，并移除
 	if(process.process_id>=1 && process.process_id<=MEMORY_UNIT_COUNT){
@@ -39,7 +40,7 @@ Process segment_mmu_unload_process(Process process,VMModel *vm_model_pointer){
 }
 
 // mmu释放掉内存
-VMModel* segment_mmu_free(VMModel *vm_model_pointer){
+SegmentVMModel* segment_mmu_free(SegmentVMModel *vm_model_pointer){
 
 	segment_mmu_collec_memory(vm_model_pointer->memory.pr);
 }
@@ -66,9 +67,9 @@ void segment_mmu_collec_memory(int *p){
 
 
 // 分配 ProcessLinkedNode
-ProcessLinkedNode* segment_mmu_alloc_process_linked_node(){
+SegmentProcessLinkedNode* segment_mmu_alloc_process_linked_node(){
 
-	ProcessLinkedNode *p = (ProcessLinkedNode*)malloc(sizeof(ProcessLinkedNode)*1);
+	SegmentProcessLinkedNode *p = (SegmentProcessLinkedNode*)malloc(sizeof(SegmentProcessLinkedNode)*1);
 
 	if( NULL == p){
 
@@ -79,7 +80,7 @@ ProcessLinkedNode* segment_mmu_alloc_process_linked_node(){
 }
 
 // 回收 ProcessLinkedNode
-void segment_mmu_collec_process_linked_node(ProcessLinkedNode *p){
+void segment_mmu_collec_process_linked_node(SegmentProcessLinkedNode *p){
 
 	free(p);
 }

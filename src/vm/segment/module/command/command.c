@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include <string.h>
-#include <vm/segment/include/object/VMModel.h>
+#include <vm/segment/include/object/SegmentVMModel.h>
 #include <vm/segment/module/ui/ui.h>
 #include <include/define/constant.h>
 #include <vm/segment/include/define/constant.h>
@@ -14,19 +14,19 @@
 // 声明
 static Process segment_command_input_data_of_new_process();
 static Process segment_command_input_data_of_halt_process();
-static void segment_command_handle_new_process(VMModel *vm_model_pointer);
-static void segment_command_handle_halt_process(VMModel *vm_model_pointer);
+static void segment_command_handle_new_process(SegmentVMModel *vm_model_pointer);
+static void segment_command_handle_halt_process(SegmentVMModel *vm_model_pointer);
 
 
 // 入口
-void segment_command_enter_interactive_env(VMModel *vm_model_pointer){
+void segment_command_enter_interactive_env(SegmentVMModel *vm_model_pointer){
 	
 	int option; // 菜单选项的选择
 
 	for(;;){ // 外层是while(1)大循环
 
 		// 打印菜单并选择选项
-		ui_print_vm_menu_view();
+		segment_ui_print_vm_menu_view();
 		scanf("%d",&option);
 		switch(option){
 
@@ -69,18 +69,18 @@ static Process segment_command_input_data_of_new_process(){
 }
 
 // 命令行处理新建一个进程
-static void segment_command_handle_new_process(VMModel *vm_model_pointer){
+static void segment_command_handle_new_process(SegmentVMModel *vm_model_pointer){
 
-	mmu_load_process(
-			vmmu_register_process(
-					pmu_new_process(
+	segment_mmu_load_process(
+			segment_vmmu_register_process(
+					segment_pmu_new_process(
 
 							segment_command_input_data_of_new_process(), vm_model_pointer
 					), vm_model_pointer
 			), vm_model_pointer
 	);
 
-	ui_print_operate_success();
+	segment_ui_print_operate_success();
 }
 
 
@@ -98,11 +98,11 @@ static Process segment_command_input_data_of_halt_process(){
 }
 
 // 命令行处理中止一个进程
-static void segment_command_handle_halt_process(VMModel *vm_model_pointer){
+static void segment_command_handle_halt_process(SegmentVMModel *vm_model_pointer){
 
-	int res = pmu_halt_process(
-			vmmu_unregister_process(
-					mmu_unload_process(
+	int res = segment_pmu_halt_process(
+			segment_vmmu_unregister_process(
+					segment_mmu_unload_process(
 
 							segment_command_input_data_of_halt_process(), vm_model_pointer
 					), vm_model_pointer
@@ -111,7 +111,7 @@ static void segment_command_handle_halt_process(VMModel *vm_model_pointer){
 
 	if(RES_OK == res){
 
-		ui_print_operate_success();
+		segment_ui_print_operate_success();
 	}
 }
 

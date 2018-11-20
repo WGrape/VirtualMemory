@@ -1,8 +1,8 @@
-#ifndef VM_SEGMENT_INCLUDE_OBJECT_VM_Model_H
-#define VM_SEGMENT_INCLUDE_OBJECT_VM_Model_H
+#ifndef VM_SEGMENT_INCLUDE_OBJECT_SEGMENT_VM_Model_H
+#define VM_SEGMENT_INCLUDE_OBJECT_SEGMENT_VM_Model_H
 
 #include <include/object/Memory.h>
-#include <include/object/PCB.h>
+#include <vm/page/include/object/PCB.h>
 #include "SegmentTable.h"
 
 // 虚拟存储器Model[主要是把一些 Memory,PCB,PageTable 结合到一起,打包传递给相关单元使用]

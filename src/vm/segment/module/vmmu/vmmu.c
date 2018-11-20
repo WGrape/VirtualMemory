@@ -1,17 +1,17 @@
 #include <stdlib.h>
 #include <include/object/Process.h>
 #include <module/system/system.h>
-#include <vm/segment/include/object/VMModel.h>
+#include <vm/segment/include/object/SegmentVMModel.h>
 #include <vm/segment/module/mmu/mmu.h>
 #include <include/define/constant.h>
 #include <vm/segment/include/object/SegmentTableItemLinkedNode.h>
 
 
 static int
-segment_vmmu_assign_to_node_pointer(SegmentTableItemLinkedNode *node_pointer, Process process, VMModel *vm_model_pointer);
+segment_vmmu_assign_to_node_pointer(SegmentTableItemLinkedNode *node_pointer, Process process, SegmentVMModel *vm_model_pointer);
 
 // 注册一个新的进程到段表中
-Process segment_vmmu_register_process(Process process, VMModel *vm_model_pointer) {
+Process segment_vmmu_register_process(Process process, SegmentVMModel *vm_model_pointer) {
 
     // 创建一个新的段表项结点
     SegmentTableItemLinkedNode *node_pointer = segment_mmu_alloc_segment_table_item_linked_node(); // 分配一个段表项结点空间内存
@@ -35,7 +35,7 @@ Process segment_vmmu_register_process(Process process, VMModel *vm_model_pointer
 }
 
 // 把段表中的一个进程注销掉
-Process segment_vmmu_unregister_process(Process process, VMModel *vm_model_pointer) {
+Process segment_vmmu_unregister_process(Process process, SegmentVMModel *vm_model_pointer) {
 
     // 注销记录在段表中的此进程的数据
     SegmentTableItemLinkedNode *pre = NULL;
@@ -75,7 +75,7 @@ Process segment_vmmu_unregister_process(Process process, VMModel *vm_model_point
 
 
 // 打印所有的段表项
-void segment_vmmu_print_all_segment_table_items(VMModel *vm_model_pointer) {
+void segment_vmmu_print_all_segment_table_items(SegmentVMModel *vm_model_pointer) {
 
     int i = 0;
     SegmentTableItemLinkedNode *p = vm_model_pointer->segment_table.head;
@@ -112,7 +112,7 @@ void segment_vmmu_print_all_segment_table_items(VMModel *vm_model_pointer) {
 
 
 // 虚拟存储器管理单元释放内存
-VMModel *segment_vmmu_free(VMModel *vm_model_pointer) {
+SegmentVMModel *segment_vmmu_free(SegmentVMModel *vm_model_pointer) {
 
 
 }
@@ -120,7 +120,7 @@ VMModel *segment_vmmu_free(VMModel *vm_model_pointer) {
 
 // 返回段表项的个数
 static int
-segment_vmmu_assign_to_node_pointer(SegmentTableItemLinkedNode *node_pointer, Process process, VMModel *vm_model_pointer) {
+segment_vmmu_assign_to_node_pointer(SegmentTableItemLinkedNode *node_pointer, Process process, SegmentVMModel *vm_model_pointer) {
 
     int segment_table_item_count = (vm_model_pointer->segment_table.segment_table_item_count) + 1; // 段表中的段表项个数+1
 

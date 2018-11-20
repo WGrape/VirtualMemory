@@ -2,7 +2,7 @@
 #define VM_PAGE_INCLUDE_OBJECT_VM_Model_H
 
 #include <include/object/Memory.h>
-#include <include/object/PCB.h>
+#include <vm/page/include/object/PCB.h>
 #include "PageTable.h"
 
 // 虚拟存储器Model[主要是把一些 Memory,PCB,PageTable 结合到一起,打包传递给相关单元使用]

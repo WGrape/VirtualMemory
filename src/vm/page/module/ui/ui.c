@@ -80,4 +80,11 @@ void ui_print_error_view(char *msg){
 	system_console_set_color(12);
 }
 
+// 打印出这个功能在下个更新中才实现
+void ui_printf_it_is_todo(){
+
+	system_console_set_color(2);
+	printf("Sorry, this will be developed in the next update\n.");
+	system_console_set_color(15);
+}
 

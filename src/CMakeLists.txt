@@ -17,13 +17,13 @@ add_executable(main ./main.c
         ${INCLUDE_DIR}/define/rescode.h
 
         ${INCLUDE_DIR}/object/Memory.h
-        ${INCLUDE_DIR}/object/PCB.h
         ${INCLUDE_DIR}/object/Process.h
 
         # 页式
         ${VM_DIR}/page/include/define/constant.h
         ${VM_DIR}/page/include/object/PageTable.h
         ${VM_DIR}/page/include/object/PageTableItemLinkedNode.h
+        ${VM_DIR}/page/include/object/PCB.h
         ${VM_DIR}/page/include/object/ProcessLinkedNode.h
         ${VM_DIR}/page/include/object/VirtualAddress.h
         ${VM_DIR}/page/include/object/VMModel.h
@@ -45,11 +45,12 @@ add_executable(main ./main.c
 
         # 段式
         ${VM_DIR}/segment/include/define/constant.h
+        ${VM_DIR}/segment/include/object/SegmentPCB.h
+        ${VM_DIR}/segment/include/object/SegmentProcessLinkedNode.h
         ${VM_DIR}/segment/include/object/SegmentTable.h
         ${VM_DIR}/segment/include/object/SegmentTableItemLinkedNode.h
-        ${VM_DIR}/segment/include/object/ProcessLinkedNode.h
-        ${VM_DIR}/segment/include/object/VirtualAddress.h
-        ${VM_DIR}/segment/include/object/VMModel.h
+        ${VM_DIR}/segment/include/object/SegmentVirtualAddress.h
+        ${VM_DIR}/segment/include/object/SegmentVMModel.h
 
         ${VM_DIR}/segment/module/command/command.c
         ${VM_DIR}/segment/module/command/command.h

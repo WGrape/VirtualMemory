@@ -1,22 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <include/object/Process.h>
-#include <vm/segment/include/object/VMModel.h>
+#include <vm/segment/include/object/SegmentVMModel.h>
+#include <vm/segment/include/object/SegmentProcessLinkedNode.h>
 #include <vm/segment/module/mmu/mmu.h>
 #include <include/define/constant.h>
-#include <include/object/PCB.h>
+#include <vm/page/include/object/PCB.h>
 #include <module/system/system.h>
-#include <vm/page/include/object/VirtualAddress.h>
+#include <vm/segment/include/object/SegmentVirtualAddress.h>
 #include <include/define/color.h>
 
 
-static int segment_pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer);
+static int segment_pmu_assign_to_node_pointer(SegmentProcessLinkedNode *node_pointer, Process process,SegmentVMModel *vm_model_pointer);
 
 // 创建新的进程
-Process segment_pmu_new_process(Process process , VMModel *vm_model_pointer){
+Process segment_pmu_new_process(Process process , SegmentVMModel *vm_model_pointer){
 
 	// 生成一个新的进程链结点
-	ProcessLinkedNode *node_pointer = segment_mmu_alloc_process_linked_node();
+	SegmentProcessLinkedNode *node_pointer = segment_mmu_alloc_process_linked_node();
 	int process_count = segment_pmu_assign_to_node_pointer(node_pointer,process,vm_model_pointer);
 
 	// 把这个新建的进程链结点记录到 PCB 中
@@ -37,11 +38,11 @@ Process segment_pmu_new_process(Process process , VMModel *vm_model_pointer){
 }
 
 // 中止进程
-int segment_pmu_halt_process(Process process,VMModel *vm_model_pointer){
+int segment_pmu_halt_process(Process process,SegmentVMModel *vm_model_pointer){
 
 	// 移除此进程在 PCB 中的进程链结点数据
-	ProcessLinkedNode *pre = NULL;
-	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
+	SegmentProcessLinkedNode *pre = NULL;
+	SegmentProcessLinkedNode *p = vm_model_pointer->pcb.head;
 	while( NULL != p && p->process_id != process.process_id ){
 
 		pre = p;
@@ -81,10 +82,10 @@ int segment_pmu_halt_process(Process process,VMModel *vm_model_pointer){
 }
 
 // 打印所有的进程
-void segment_pmu_print_all_processes(VMModel *vm_model_pointer){
+void segment_pmu_print_all_processes(SegmentVMModel *vm_model_pointer){
 
 	int i=0;
-	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
+	SegmentProcessLinkedNode *p = vm_model_pointer->pcb.head;
 
 	if(vm_model_pointer->pcb.process_count<1){
 
@@ -105,7 +106,7 @@ void segment_pmu_print_all_processes(VMModel *vm_model_pointer){
 
 		++i;
 		printf("--------------------------------------------------------------\n");
-		printf("| %dth process  |   %d   |   %s   |           %d         | %d\n",i,p->process_id, p->process_name,p->virtual_address.virtual_page_number,p->virtual_address.offset);
+		printf("| %dth process  |   %d   |   %s   |           %d         | %d\n",i,p->process_id, p->process_name,p->virtual_address.segment_number,p->virtual_address.offset);
 		p = p->next;
 	}
 	printf("--------------------------------------------------------------\n");
@@ -115,11 +116,11 @@ void segment_pmu_print_all_processes(VMModel *vm_model_pointer){
 }
 
 // 进程管理单元释放内存
-VMModel* segment_pmu_free(VMModel *vm_model_pointer){
+SegmentVMModel* segment_pmu_free(SegmentVMModel *vm_model_pointer){
 
 	// 释放掉全部的 ProcessLinkedNode 结点
-	ProcessLinkedNode *p = vm_model_pointer->pcb.head;
-	ProcessLinkedNode *q = NULL;
+	SegmentProcessLinkedNode *p = vm_model_pointer->pcb.head;
+	SegmentProcessLinkedNode *q = NULL;
 	while(NULL != p){
 
 		q = p->next;
@@ -135,7 +136,7 @@ VMModel* segment_pmu_free(VMModel *vm_model_pointer){
 
 
 // 返回进程的个数
-static int segment_pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, Process process,VMModel *vm_model_pointer){
+static int segment_pmu_assign_to_node_pointer(SegmentProcessLinkedNode *node_pointer, Process process,SegmentVMModel *vm_model_pointer){
 
 	int process_count = (vm_model_pointer->pcb.process_count)+1; // PCB中的进程个数+1
 
@@ -145,7 +146,7 @@ static int segment_pmu_assign_to_node_pointer(ProcessLinkedNode *node_pointer, P
 	strcpy(node_pointer->process_extra,"");
 
 	// 进程的虚拟地址
-	node_pointer->virtual_address.virtual_page_number=process_count;//虚页号 : 即为当前的进程个数
+	node_pointer->virtual_address.segment_number=process_count;//虚页号 : 即为当前的进程个数
 	node_pointer->virtual_address.offset = process_count % MEMORY_PAGE_SIZE; // 偏移量 : 即为当前的进程个数 Mod MEMORY_PAGE_SIZE
 
 

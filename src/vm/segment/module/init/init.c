@@ -1,21 +1,21 @@
 #include<stdio.h>
-#include <vm/segment/include/object/VMModel.h>
+#include <vm/segment/include/object/SegmentVMModel.h>
 #include <vm/segment/module/ui/ui.h>
 #include <vm/segment/module/command/command.h>
 #include <vm/segment/module/vmmu/vmmu.h>
 #include <vm/segment/module/pmu/pmu.h>
 #include <vm/segment/module/mmu/mmu.h>
 
-static VMModel __vm_model__; // 全局静态的 __vm_model__ , 存储了全部的数据 = Memory+PCB+PageTable
-static VMModel *__vm_model_pointer__; // 指向 __vm_model__ 的指针
+static SegmentVMModel __vm_model__; // 全局静态的 __vm_model__ , 存储了全部的数据 = Memory+PCB+PageTable
+static SegmentVMModel *__vm_model_pointer__; // 指向 __vm_model__ 的指针
 
 // 仅限内部使用
-static VMModel segment_vm_get_vm_model(){
+static SegmentVMModel segment_vm_get_vm_model(){
 
 	// 分配一块内存
 	int *memory_pr = segment_mmu_alloc_memory();
 
-	VMModel vm_model = {
+	SegmentVMModel vm_model = {
 		memory : {
 
 			pr: memory_pr,
@@ -54,7 +54,7 @@ static void segment_vm_destruct(){
 	);// 物理内存释放掉
 
 	// 销毁
-	VMModel vm_model = {
+	SegmentVMModel vm_model = {
 
 		memory : {
 

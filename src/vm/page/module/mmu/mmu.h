@@ -1,8 +1,8 @@
-#include <include/object/Process.h>
-#include <vm/page/include/object/ProcessLinkedNode.h>
-
 #ifndef VM_PAGE_MODULE_MMU_H
 #define VM_PAGE_MODULE_MMU_H
+
+#include <include/object/Process.h>
+#include <vm/page/include/object/ProcessLinkedNode.h>
 
 extern int* mmu_alloc_memory();
 extern void mmu_collec_memory(int *p);
