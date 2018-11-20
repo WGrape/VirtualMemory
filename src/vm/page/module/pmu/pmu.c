@@ -47,21 +47,27 @@ Process pmu_halt_process(Process process,VMModel *vm_model_pointer){
 		pre = p;
 		p = p->next;
 	}
-	if(NULL == pre){ // 如果当前只有1个进程
 
-		vm_model_pointer->pcb.head=NULL;
-		vm_model_pointer->pcb.tail=NULL;
+	// 如果找到了此进程链结点
+	if(NULL!=p&& p->process_id == process.process_id){
 
-	} else {
+		if(NULL == pre){ // 如果当前只有1个进程
 
-		// 上一个结点连向即将移除的结点的下一个结点
-		pre->next=p->next;
+			vm_model_pointer->pcb.head=NULL;
+			vm_model_pointer->pcb.tail=NULL;
+
+		} else {
+
+			// 上一个结点连向即将移除的结点的下一个结点
+			pre->next=p->next;
+		}
+
+		// 释放掉所占内存
+		mmu_collec_process_linked_node(p);
+
+		// PCB中的进程数 -1
+		(vm_model_pointer->pcb.process_count)--;
 	}
-	// 释放掉所占内存
-	mmu_collec_process_linked_node(p);
-
-	// PCB中的进程数 -1
-	(vm_model_pointer->pcb.process_count)--;
 
 
 	// 想想还有哪里需要记录 ...
