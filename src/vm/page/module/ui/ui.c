@@ -53,7 +53,7 @@ void ui_print_vm_menu_view(){
 	printf("\n\n");
 	printf("Services for you to choose\n");
 	ui_print_line();
-	printf("| 1(Print All Proccesses) | 2(New Process) | 3(Halt Process) | 4(Exit) |\n");
+	printf("| 1(Print All Proccesses) | 2(New Process) | 3(Halt Process) | 4(Print All Page Table Items) | 5(Exit) |\n");
 	ui_print_line();
 	ui_print_wait_for_input();
 }
@@ -61,7 +61,7 @@ void ui_print_vm_menu_view(){
 // 打印出操作成功视图
 void ui_print_operate_success(){
 
-	printf("Operation Successfully !");
+	printf("\nOperation Successfully !");
 }
 
 // 打印出错误视图

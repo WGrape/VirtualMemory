@@ -7,6 +7,8 @@ extern Process vmmu_register_process(Process process,VMModel *vm_model_pointer);
 
 extern Process vmmu_unregister_process(Process process,VMModel *vm_model_pointer);
 
+extern void pmu_print_all_page_table_items(VMModel *vm_model_pointer);
+
 extern VMModel* vmmu_free(VMModel *vm_model_pointer);
 
 #endif

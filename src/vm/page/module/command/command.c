@@ -40,6 +40,9 @@ void command_enter_interactive_env(VMModel *vm_model_pointer){
 			case VM_MENU_OPTION_HALT_PROCESSES:
 				command_handle_halt_process(vm_model_pointer);break;
 
+			case VM_MENU_OPTION_PRINT_ALL_PAGE_TABLE_ITEMS:
+				pmu_print_all_page_table_items(vm_model_pointer);break;
+
 			// 退出
 			default:
 				return;

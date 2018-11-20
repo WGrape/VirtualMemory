@@ -70,6 +70,34 @@ Process vmmu_unregister_process(Process process,VMModel *vm_model_pointer){
 }
 
 
+// 打印所有的页表项
+void pmu_print_all_page_table_items(VMModel *vm_model_pointer){
+
+	int i=0;
+	PageTableItemLinkedNode *p = vm_model_pointer->page_table.head;
+
+	if(vm_model_pointer->page_table.page_table_item_count<1){
+
+		printf("Sorry, there is no any items.");
+		return;
+	}
+
+	printf("\n\n------------------------------------\n");
+	printf("| The total item count is : %d\n",vm_model_pointer->page_table.page_table_item_count);
+	printf("------------------------------------\n");
+	printf("|      | virtual_page_number | physical_page_number | load | next  \n");
+	while(NULL!=p){ // 这样写的好处是防止写成赋值号，而且更突出重点
+
+		++i;
+		printf("------------------------------------\n");
+		printf("| %dth item |   %d   |  %d  | %d | %p \n",i,p->virtual_page_number, p->physical_page_number,p->load,p->next);
+		p = p->next;
+	}
+	printf("------------------------------------\n\n");
+
+}
+
+
 // 虚拟存储器管理单元释放内存
 VMModel* vmmu_free(VMModel *vm_model_pointer){
 
