@@ -3,7 +3,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/language-C-red.svg">
 <img src="https://img.shields.io/badge/version-1.0-blue.svg">
-<img src="https://img.shields.io/badge/processing-30%-green.svg">
+<img src="https://img.shields.io/badge/processing-30-green.svg">
 <img src="https://img.shields.io/badge/license-MIT-black.svg">
 </p>
 
