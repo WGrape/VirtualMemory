@@ -1,12 +1,13 @@
 # VirtualMemory
 
-计算机组成原理中虚拟存储器的实现（A Virtual Memory Implementation In Computer Organization）
-
 <p align="center">
 <img src="https://img.shields.io/badge/language-C-red.svg">
 <img src="https://img.shields.io/badge/version-1.0-blue.svg">
+<img src="https://img.shields.io/badge/finishing-30%-green.svg">
 <img src="https://img.shields.io/badge/license-MIT-black.svg">
 </p>
+
+计算机组成原理中虚拟存储器的实现（A Virtual Memory Implementation In Computer Organization）
 
 <br>
 
@@ -20,7 +21,6 @@
 
 [开始使用](#article-usage)
 
-> ### 不断更新中( updating ) ...
 
 ## ➴ 教程（Tutorial）
 
