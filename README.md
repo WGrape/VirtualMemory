@@ -1,7 +1,12 @@
 # VirtualMemory
+
 计算机组成原理中虚拟存储器的实现（A Virtual Memory Implementation In Computer Organization）
 
-> ### 不断更新中( updating ) ...
+<p align="center">
+<img src="https://img.shields.io/badge/language-C-red.svg">
+<img src="https://img.shields.io/badge/version-1.0-blue.svg">
+<img src="https://img.shields.io/badge/license-MIT-black.svg">
+</p>
 
 <br>
 
@@ -14,6 +19,8 @@
 ```注：由于高速缓冲存储器（Cache）和虚拟存储器紧密关系，故也会完成Cache的实现 。【 后续更新 】```
 
 [开始使用](#article-usage)
+
+> ### 不断更新中( updating ) ...
 
 ## ➴ 教程（Tutorial）
 
