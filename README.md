@@ -32,5 +32,9 @@
 
 	2. 编译源码 src/main.c 文件然后运行
 
+## ✣ 基本架构（Architecture）
+
+<img src="https://github.com/Lvsi-China/VirtualMemory/raw/master/extra/images/architecture.png" >
+
 ## ♘ 用途（Introduction）
 本项目仅用于虚拟存储器的学习和实践。
